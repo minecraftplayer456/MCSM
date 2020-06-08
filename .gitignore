@@ -1,0 +1,7 @@
+﻿#Build
+obj
+bin
+packages
+
+#Rider
+.idea

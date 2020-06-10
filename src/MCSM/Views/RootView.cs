@@ -1,4 +1,6 @@
-﻿using MCSM.Util;
+﻿using System;
+using MCSM.Util;
+using MCSM.ViewModels;
 using Terminal.Gui;
 
 namespace MCSM.Views
@@ -10,15 +12,23 @@ namespace MCSM.Views
     {
         public RootView() : base(new Rect(0, 0, Driver.Cols, Driver.Rows))
         {
-            var menu = new MenuBar(new MenuBarItem[] { });
+            var viewModel = new RootViewModel();
+            
+            var menuBar = new MenuBar(new MenuBarItem[] { });
+            var statusBar = new StatusBar();
 
             var window = new Window($"MCMS - {Constants.MCSMVersion}", 1);
 
-            var view = new MainView();
-
-            window.Add(view);
+            viewModel.CurrentView.Subscribe(view =>
+            {
+                if (view == null) return;
+                window.RemoveAll();
+                window.Add(view);
+            });
+            
             base.Add(window);
-            base.Add(menu);
+            base.Add(menuBar);
+            base.Add(statusBar);
         }
     }
 }

@@ -1,23 +1,34 @@
-﻿using Terminal.Gui;
+﻿using System;
+using MCSM.Util;
+using MCSM.ViewModels;
+using Terminal.Gui;
 
 namespace MCSM.Views
 {
     /// <summary>
-    /// Root view which is static with a menubar. Only the child view changes.
+    ///     Root view which is static with a menubar. Only the child view changes.
     /// </summary>
     public class RootView : Toplevel
     {
         public RootView() : base(new Rect(0, 0, Driver.Cols, Driver.Rows))
         {
-            //Menubar at top of console
-            var menu = new MenuBar(new MenuBarItem[] {});
+            var viewModel = new RootViewModel();
             
-            //View
-            //TODO Make Changeable
-            var mainView = new MainView();
+            var menuBar = new MenuBar(new MenuBarItem[] { });
+            var statusBar = new StatusBar();
+
+            var window = new Window($"MCMS - {Constants.MCSMVersion}", 1);
+
+            viewModel.CurrentView.Subscribe(view =>
+            {
+                if (view == null) return;
+                window.RemoveAll();
+                window.Add(view);
+            });
             
-            base.Add(menu);
-            base.Add(mainView);
+            base.Add(window);
+            base.Add(menuBar);
+            base.Add(statusBar);
         }
     }
 }

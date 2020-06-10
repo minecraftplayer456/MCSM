@@ -1,14 +1,16 @@
-﻿using MCSM.Util.UI;
+﻿using Reactive.Bindings;
 
 namespace MCSM.ViewModels
 {
     public class MainViewModel
     {
-        public readonly PropertySubject<string> Name;
+        public readonly ReactiveProperty<string> Input;
+        public readonly ReadOnlyReactiveProperty<string> Output;
 
         public MainViewModel()
         {
-            Name = new PropertySubject<string> {Value = "Test"};
+            Input = new ReactiveProperty<string>("");
+            Output = Input.ToReadOnlyReactiveProperty();
         }
     }
 }

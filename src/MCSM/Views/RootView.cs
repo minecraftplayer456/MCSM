@@ -1,4 +1,5 @@
-﻿using Terminal.Gui;
+﻿using MCSM.Util;
+using Terminal.Gui;
 
 namespace MCSM.Views
 {
@@ -11,9 +12,12 @@ namespace MCSM.Views
         {
             var menu = new MenuBar(new MenuBarItem[] { });
 
-            var mainView = new MainView();
+            var window = new Window($"MCMS - {Constants.MCSMVersion}", 1);
 
-            base.Add(mainView);
+            var view = new MainView();
+
+            window.Add(view);
+            base.Add(window);
             base.Add(menu);
         }
     }

@@ -13,8 +13,4 @@
       <PackageReference Include="Terminal.Gui" Version="0.90.0" />
     </ItemGroup>
 
-    <ItemGroup>
-      <Folder Include="Models" />
-    </ItemGroup>
-
 </Project>

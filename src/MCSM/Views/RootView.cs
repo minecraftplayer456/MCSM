@@ -1,34 +1,48 @@
 ﻿using System;
+using MCSM.Services;
 using MCSM.Util;
 using MCSM.ViewModels;
+using MCSM.Views.Server;
 using Terminal.Gui;
 
 namespace MCSM.Views
 {
-    /// <summary>
-    ///     Root view which is static with a menubar. Only the child view changes.
-    /// </summary>
-    public class RootView : Toplevel
+    public class RootView : Toplevel, IViewFor<RootViewModel>
     {
         public RootView() : base(new Rect(0, 0, Driver.Cols, Driver.Rows))
         {
-            var viewModel = new RootViewModel();
-            
-            var menuBar = new MenuBar(new MenuBarItem[] { });
-            var statusBar = new StatusBar();
+            ViewModel = new RootViewModel();
 
-            var window = new Window($"MCMS - {Constants.MCSMVersion}", 1);
-
-            viewModel.CurrentView.Subscribe(view =>
+            var menuBar = new MenuBar(new MenuBarItem[]
             {
-                if (view == null) return;
-                window.RemoveAll();
-                window.Add(view);
+                new MenuBarItem("Servers", "", () =>
+                {
+                    ViewModel.ChangeMainView.Execute(UIService.Default.getView<ServersView>());
+                }),  
+                new MenuBarItem("Server", "", () =>
+                {
+                    ViewModel.ChangeMainView.Execute(UIService.Default.getView<ServerView>());
+                })
             });
             
+            var statusBar = new StatusBar();
+
+            var window = new Window(Constants.MCSMShortNameVersion, 1);
+
+            ViewModel.CurrentMainView.Subscribe(view =>
+            {
+                if (view == null) return;
+
+                window.RemoveAll();
+                window.Add(view as View);
+                window.Title = Constants.MCSMShortNameVersion + " - " + view.ViewModel.ViewName.Value;
+            });
+
             base.Add(window);
             base.Add(menuBar);
             base.Add(statusBar);
         }
+
+        public RootViewModel ViewModel { get; }
     }
 }

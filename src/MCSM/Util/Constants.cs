@@ -2,10 +2,6 @@
 
 namespace MCSM.Util
 {
-    /// <summary>
-    ///     Utils class with global constants
-    ///     Some of them depends on the run configuration(Debug, Release)
-    /// </summary>
     public static class Constants
     {
         #region DependOnConfiguration
@@ -19,5 +15,6 @@ namespace MCSM.Util
         #endregion
 
         public const string MCSMVersion = "Alpha-0.1.0";
+        public const string MCSMShortNameVersion = "MCMS - " + MCSMVersion;
     }
 }

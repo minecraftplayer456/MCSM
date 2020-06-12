@@ -3,6 +3,7 @@
   &lt;Assembly Path="C:\Users\Jan\.nuget\packages\system.reactive.windows.threading\4.4.1\lib\net46\System.Reactive.Windows.Threading.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\Jan\.nuget\packages\system.reactive\4.4.1\lib\netstandard2.0\System.Reactive.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\Jan\.nuget\packages\terminal.gui\0.90.0\lib\netstandard2.0\Terminal.Gui.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Jan\.nuget\packages\reactiveproperty.core\7.1.0\lib\netstandard2.0\ReactiveProperty.Core.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
 	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=52ea45e5_002Dc1e0_002D49aa_002Da708_002Da6122dd7ae52/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestAppStart" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;

@@ -1,8 +1,6 @@
-﻿using MCSM.Views;
-using Serilog;
+﻿using Serilog;
 using Serilog.Core;
 using Serilog.Events;
-using Terminal.Gui;
 using Constants = MCSM.Util.Constants;
 
 namespace MCSM
@@ -20,14 +18,13 @@ namespace MCSM
                 .CreateLogger();
 
             Log.Information(Constants.MCSMShortNameVersion);
-            
+
             consoleLogLevelSwitch.MinimumLevel = LogEventLevel.Fatal;
-            Application.Run<RootView>();
+            //Application.Run<RootView>();
         }
-        
+
         public static void Main(string[] args)
         {
-            //Initialize App
             var app = new App();
             app.Start();
         }

@@ -1,13 +1,15 @@
-﻿using Serilog;
+﻿using MCSM.Views;
+using Serilog;
 using Serilog.Core;
 using Serilog.Events;
+using Terminal.Gui;
 using Constants = MCSM.Util.Constants;
 
 namespace MCSM
 {
     public class App
     {
-        public void Start()
+        private void Start()
         {
             var consoleLogLevelSwitch = new LoggingLevelSwitch(Constants.DefaultLogLevel);
 
@@ -20,7 +22,7 @@ namespace MCSM
             Log.Information(Constants.MCSMShortNameVersion);
 
             consoleLogLevelSwitch.MinimumLevel = LogEventLevel.Fatal;
-            //Application.Run<RootView>();
+            Application.Run<RootView>();
         }
 
         public static void Main(string[] args)

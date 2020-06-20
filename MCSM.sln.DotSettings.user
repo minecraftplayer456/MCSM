@@ -1,0 +1,13 @@
+﻿<wpf:ResourceDictionary xml:space="preserve" xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:s="clr-namespace:System;assembly=mscorlib" xmlns:ss="urn:shemas-jetbrains-com:settings-storage-xaml" xmlns:wpf="http://schemas.microsoft.com/winfx/2006/xaml/presentation">
+	<s:String x:Key="/Default/Environment/AssemblyExplorer/XmlDocument/@EntryValue">&lt;AssemblyExplorer&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Jan\.nuget\packages\system.reactive.windows.threading\4.4.1\lib\net46\System.Reactive.Windows.Threading.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Jan\.nuget\packages\system.reactive\4.4.1\lib\netstandard2.0\System.Reactive.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Jan\.nuget\packages\terminal.gui\0.90.0\lib\netstandard2.0\Terminal.Gui.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Jan\.nuget\packages\reactiveproperty.core\7.1.0\lib\netstandard2.0\ReactiveProperty.Core.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\3.1.0\ref\netcoreapp3.1\System.Linq.dll" /&gt;&#xD;
+&lt;/AssemblyExplorer&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=52ea45e5_002Dc1e0_002D49aa_002Da708_002Da6122dd7ae52/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestAppStart" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;TestAncestor&gt;&#xD;
+    &lt;TestId&gt;xUnit::16958C8E-E540-4EA7-91BA-37182A63C1FC::.NETCoreApp,Version=v3.1::MCSM.Test.AppTest.TestAppStart&lt;/TestId&gt;&#xD;
+  &lt;/TestAncestor&gt;&#xD;
+&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>

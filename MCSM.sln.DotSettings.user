@@ -5,9 +5,17 @@
   &lt;Assembly Path="C:\Users\Jan\.nuget\packages\terminal.gui\0.90.0\lib\netstandard2.0\Terminal.Gui.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\Jan\.nuget\packages\reactiveproperty.core\7.1.0\lib\netstandard2.0\ReactiveProperty.Core.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\3.1.0\ref\netcoreapp3.1\System.Linq.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Program Files\dotnet\packs\Microsoft.NETCore.App.Ref\3.1.0\ref\netcoreapp3.1\System.Text.Json.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Jan\.nuget\packages\xunit.extensibility.core\2.4.1\lib\netstandard1.1\xunit.core.dll" /&gt;&#xD;
+  &lt;Assembly Path="C:\Users\Jan\.nuget\packages\serilog.sinks.xunit\2.0.4\lib\netstandard1.1\Serilog.Sinks.XUnit.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=52ea45e5_002Dc1e0_002D49aa_002Da708_002Da6122dd7ae52/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="TestAppStart" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2780a548_002D370c_002D4f4f_002D920a_002Df2a9411b6e96/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+  &lt;Solution /&gt;&#xD;
+&lt;/SessionState&gt;</s:String>
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d5d0eb9c_002Dbde5_002D4496_002Dbabe_002D43608a0d8aa7/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="When_NoWorkspaceFound_CreateNew" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::16958C8E-E540-4EA7-91BA-37182A63C1FC::.NETCoreApp,Version=v3.1::MCSM.Test.AppTest.TestAppStart&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::16958C8E-E540-4EA7-91BA-37182A63C1FC::.NETCoreApp,Version=v3.1::MCSM.Test.Services.WorkspaceServiceTest.When_NoWorkspaceFound_CreateNew&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String></wpf:ResourceDictionary>
+&lt;/SessionState&gt;</s:String>
+	
+	</wpf:ResourceDictionary>

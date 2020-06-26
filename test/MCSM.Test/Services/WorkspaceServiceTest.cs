@@ -6,6 +6,7 @@ using Xunit;
 
 namespace MCSM.Test.Services
 {
+    [Collection("IO")]
     public class WorkspaceServiceTest : IClassFixture<InitializeClassFixture>
     {
         private const string WorkspacePath = Constants.DefaultWorkspacePath;
@@ -41,7 +42,7 @@ namespace MCSM.Test.Services
         }
 
         [Fact]
-        public void When_WorkspaceFound_DeleteIt()
+        public void When_WorkspaceFound_Then_DeleteIt()
         {
             if (!WorkspaceService.ValidateWorkspaceDirectory(WorkspacePath))
                 WorkspaceService.Default.CreateWorkspace(WorkspacePath, WorkspaceName);

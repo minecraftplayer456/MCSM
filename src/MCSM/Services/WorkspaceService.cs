@@ -1,6 +1,7 @@
 ﻿using System.IO;
 using MCSM.Models;
 using MCSM.Util;
+using MCSM.Util.IO;
 using Serilog;
 
 namespace MCSM.Services
@@ -30,11 +31,10 @@ namespace MCSM.Services
                 workspaceName);
 
             var workspace = new Workspace(workspaceName);
-            var workspaceFilePath = workspacePath + "/" + Constants.DefaultWorkspaceFileName;
 
             Directory.CreateDirectory(workspacePath);
 
-            var workspaceFile = File.CreateText(workspaceFilePath);
+            var workspaceFile = File.CreateText(Paths.WorkspaceJson.AbsolutePath);
             var workspaceJson = JsonUtil.Serialize(workspace);
             workspaceFile.WriteLine(workspaceJson);
             workspaceFile.Close();

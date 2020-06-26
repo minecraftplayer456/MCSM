@@ -1,6 +1,6 @@
 ﻿using System.Text.Json;
 
-namespace MCSM.Util
+namespace MCSM.Util.IO
 {
     /// <summary>
     ///     Utility class for serializing and deserializing json / json files

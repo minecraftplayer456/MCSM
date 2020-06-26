@@ -1,6 +1,6 @@
 ﻿using Serilog;
 
-namespace MCSM.Util
+namespace MCSM.Util.IO
 {
     /// <summary>
     ///     Utility class for managing Serilog logger globally

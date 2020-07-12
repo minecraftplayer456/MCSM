@@ -3,5 +3,9 @@ obj
 bin
 packages
 
+#Visual Studio
+.DotSettings
+.DotSettings.user
+
 #Rider
 .idea

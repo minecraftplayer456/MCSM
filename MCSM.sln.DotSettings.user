@@ -9,19 +9,20 @@
   &lt;Assembly Path="C:\Users\Jan\.nuget\packages\xunit.extensibility.core\2.4.1\lib\netstandard1.1\xunit.core.dll" /&gt;&#xD;
   &lt;Assembly Path="C:\Users\Jan\.nuget\packages\serilog.sinks.xunit\2.0.4\lib\netstandard1.1\Serilog.Sinks.XUnit.dll" /&gt;&#xD;
 &lt;/AssemblyExplorer&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=2780a548_002D370c_002D4f4f_002D920a_002Df2a9411b6e96/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="All tests from Solution" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;Solution /&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=9c8634f2_002Dea68_002D4548_002D82fc_002D5cf512dfd56a/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="When_NoFilesFound_Then_Create" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
+	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=e8519790_002Df82e_002D4b0d_002Db542_002Def1bf3bc02bf/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="When_NoFilesFound_Then_Create" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
   &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::16958C8E-E540-4EA7-91BA-37182A63C1FC::.NETCoreApp,Version=v3.1::MCSM.Test.Util.IO.PathUtil.When_NoFilesFound_Then_Create&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::16958C8E-E540-4EA7-91BA-37182A63C1FC::.NETCoreApp,Version=v3.1::MCSM.Test.Util.IO.PathUtilTest.When_NoFilesFound_Then_Create&lt;/TestId&gt;&#xD;
+    &lt;TestId&gt;xUnit::16958C8E-E540-4EA7-91BA-37182A63C1FC::.NETCoreApp,Version=v3.1::MCSM.Test.Services.WorkspaceServiceTest&lt;/TestId&gt;&#xD;
   &lt;/TestAncestor&gt;&#xD;
 &lt;/SessionState&gt;</s:String>
-	<s:String x:Key="/Default/Environment/UnitTesting/UnitTestSessionStore/Sessions/=d5d0eb9c_002Dbde5_002D4496_002Dbabe_002D43608a0d8aa7/@EntryIndexedValue">&lt;SessionState ContinuousTestingMode="0" Name="When_NoWorkspaceFound_CreateNew" xmlns="urn:schemas-jetbrains-com:jetbrains-ut-session"&gt;&#xD;
-  &lt;TestAncestor&gt;&#xD;
-    &lt;TestId&gt;xUnit::16958C8E-E540-4EA7-91BA-37182A63C1FC::.NETCoreApp,Version=v3.1::MCSM.Test.Util.IO.PathUtil.When_NoFilesFound_Then_Create&lt;/TestId&gt;&#xD;
-    &lt;TestId&gt;xUnit::16958C8E-E540-4EA7-91BA-37182A63C1FC::.NETCoreApp,Version=v3.1::MCSM.Test.Util.IO.PathUtil.When_ParentInitialized_Then_InitLazy&lt;/TestId&gt;&#xD;
-  &lt;/TestAncestor&gt;&#xD;
-&lt;/SessionState&gt;</s:String>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	</wpf:ResourceDictionary>

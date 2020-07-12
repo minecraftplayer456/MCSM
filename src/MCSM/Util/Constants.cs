@@ -8,7 +8,7 @@ namespace MCSM.Util
     public static class Constants
     {
         public const string DefaultWorkspacePath = "Workspace";
-        public const string DefaultWorkspaceFileName = "workspace.json";
+        public const string DefaultWorkspaceName = "DefaultWorkspace";
     }
 
     /// <summary>

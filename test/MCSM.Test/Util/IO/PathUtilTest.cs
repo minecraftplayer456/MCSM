@@ -1,6 +1,5 @@
 ﻿using System.IO;
 using MCSM.Util;
-using MCSM.Util.IO;
 using Xunit;
 using Path = MCSM.Util.IO.Path;
 
@@ -16,26 +15,17 @@ namespace MCSM.Test.Util.IO
         {
             if (Directory.Exists(WorkspacePath)) Directory.Delete(WorkspacePath, true);
 
-            var path = Paths.Workspace.Initialize(WorkspacePath);
+            var path = new Path();
+            var path1 = new Path("test1", path);
+            var path2 = new Path("test2.txt", path, false);
+
+            path.Initialize(WorkspacePath);
 
             Assert.True(Directory.Exists(path.AbsolutePath));
             foreach (var pathChild in path.Children)
                 Assert.True(pathChild.IsDirectory
                     ? Directory.Exists(pathChild.AbsolutePath)
                     : File.Exists(pathChild.AbsolutePath));
-        }
-
-        [Fact]
-        public void When_ParentInitialized_Then_InitLazy()
-        {
-            if (Directory.Exists(WorkspacePath)) Directory.Delete(WorkspacePath, true);
-
-            Paths.Workspace.Initialize(WorkspacePath);
-            var lazyPath = new Path("Server1", Paths.Servers, lazyInit: true);
-
-            lazyPath.InitializeLazy();
-
-            Assert.True(Directory.Exists(lazyPath.AbsolutePath));
         }
     }
 }

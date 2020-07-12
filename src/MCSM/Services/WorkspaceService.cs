@@ -17,14 +17,14 @@ namespace MCSM.Services
         /// </summary>
         /// <param name="workspaceName">Name of the workspace</param>
         /// <param name="workspacePath">Path to workspace directory</param>
-        /// <returns>True if created new workspace</returns>
-        public bool CreateWorkspace(string workspacePath, string workspaceName)
+        /// <returns>New workspace</returns>
+        public Workspace CreateWorkspace(string workspacePath, string workspaceName)
         {
             if (ValidateWorkspaceDirectory(workspacePath))
             {
                 Log.Debug("Found workspace in {workspacePath}. Create no new one.", workspacePath);
                 //TODO Add loading workspace
-                return false;
+                return null;
             }
 
             Log.Debug("Found no workspace in {workspacePath}. Create new one {workspaceName}", workspacePath,
@@ -32,26 +32,26 @@ namespace MCSM.Services
 
             var workspace = new Workspace(workspaceName);
 
-            Directory.CreateDirectory(workspacePath);
+            workspace.Path.Initialize(workspacePath);
 
-            var workspaceFile = File.CreateText(Paths.WorkspaceJson.AbsolutePath);
+            var workspaceFile = File.CreateText(workspace.JsonPath.AbsolutePath);
             var workspaceJson = JsonUtil.Serialize(workspace);
             workspaceFile.WriteLine(workspaceJson);
             workspaceFile.Close();
 
-            return true;
+            return workspace;
         }
 
         /// <summary>
-        ///     Deletes workspace at given path
+        ///     Deletes workspace
         /// </summary>
-        /// <param name="workspacePath">path to workspace to delete</param>
+        /// <param name="workspace">workspace to delete</param>
         /// <returns>True if workspace was deleted successfully</returns>
-        public bool DeleteWorkspace(string workspacePath)
+        public bool DeleteWorkspace(Workspace workspace)
         {
-            if (!ValidateWorkspaceDirectory(workspacePath)) return false;
+            if (!ValidateWorkspaceDirectory(workspace.Path.AbsolutePath)) return false;
 
-            Directory.Delete(workspacePath, true);
+            Directory.Delete(workspace.Path.AbsolutePath, true);
 
             return true;
         }

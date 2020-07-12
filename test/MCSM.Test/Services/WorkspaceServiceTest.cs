@@ -1,4 +1,5 @@
 ﻿using System.IO;
+using MCSM.Models;
 using MCSM.Services;
 using MCSM.Test.Util;
 using MCSM.Util;
@@ -10,14 +11,14 @@ namespace MCSM.Test.Services
     public class WorkspaceServiceTest : IClassFixture<InitializeClassFixture>
     {
         private const string WorkspacePath = Constants.DefaultWorkspacePath;
-        private const string WorkspaceName = "testWorkspace";
+        private const string WorkspaceName = Constants.DefaultWorkspaceName;
 
         [Fact]
         public void When_NoWorkspaceFound_Then_CreateNew()
         {
             if (WorkspaceService.ValidateWorkspaceDirectory(WorkspacePath)) Directory.Delete(WorkspacePath, true);
 
-            Assert.True(WorkspaceService.Default.CreateWorkspace(WorkspacePath, WorkspaceName));
+            Assert.NotNull(WorkspaceService.Default.CreateWorkspace(WorkspacePath, WorkspaceName));
 
             Assert.True(WorkspaceService.ValidateWorkspaceDirectory(WorkspacePath));
         }
@@ -27,7 +28,7 @@ namespace MCSM.Test.Services
         {
             if (WorkspaceService.ValidateWorkspaceDirectory(WorkspacePath)) Directory.Delete(WorkspacePath, true);
 
-            Assert.False(WorkspaceService.Default.DeleteWorkspace(WorkspacePath));
+            Assert.False(WorkspaceService.Default.DeleteWorkspace(new Workspace(WorkspaceName)));
         }
 
         [Fact]
@@ -44,10 +45,9 @@ namespace MCSM.Test.Services
         [Fact]
         public void When_WorkspaceFound_Then_DeleteIt()
         {
-            if (!WorkspaceService.ValidateWorkspaceDirectory(WorkspacePath))
-                WorkspaceService.Default.CreateWorkspace(WorkspacePath, WorkspaceName);
+            var workspace = WorkspaceService.Default.CreateWorkspace(WorkspacePath, WorkspaceName);
 
-            Assert.True(WorkspaceService.Default.DeleteWorkspace(WorkspacePath));
+            Assert.True(WorkspaceService.Default.DeleteWorkspace(workspace));
 
             Assert.False(WorkspaceService.ValidateWorkspaceDirectory(WorkspacePath));
         }
@@ -58,7 +58,7 @@ namespace MCSM.Test.Services
             if (!WorkspaceService.ValidateWorkspaceDirectory(WorkspacePath))
                 WorkspaceService.Default.CreateWorkspace(WorkspacePath, WorkspaceName);
 
-            Assert.False(WorkspaceService.Default.CreateWorkspace(WorkspacePath, WorkspaceName));
+            Assert.Null(WorkspaceService.Default.CreateWorkspace(WorkspacePath, WorkspaceName));
         }
     }
 }

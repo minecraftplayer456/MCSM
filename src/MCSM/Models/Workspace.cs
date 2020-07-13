@@ -1,4 +1,4 @@
-﻿using MCSM.Util.IO;
+﻿using MCSM.Services.IO;
 
 namespace MCSM.Models
 {
@@ -18,14 +18,15 @@ namespace MCSM.Models
         ///     Creates new workspace model with given name
         /// </summary>
         /// <param name="name">name for workspace model</param>
-        public Workspace(string name)
+        /// <param name="path">path to workspace</param>
+        public Workspace(string name, Path path)
         {
             Name = name;
 
-            Path = new Path();
-            WorldsPath = new Path("worlds", Path);
-            ServersPath = new Path("servers", Path);
-            JsonPath = new Path("workspace.json", Path, false);
+            Path = path;
+            WorldsPath = FileService.Default.Path("worlds", Path);
+            ServersPath = FileService.Default.Path("servers", Path);
+            JsonPath = FileService.Default.Path("workspace.json", Path, false);
         }
     }
 }

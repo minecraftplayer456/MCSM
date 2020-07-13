@@ -6,7 +6,7 @@ namespace MCSM.Util.IO
     ///     Utility class for serializing and deserializing json / json files
     /// </summary>
     //TODO Add json file support
-    public class JsonUtil
+    public static class JsonUtil
     {
         private static readonly JsonSerializerOptions Options = new JsonSerializerOptions
         {

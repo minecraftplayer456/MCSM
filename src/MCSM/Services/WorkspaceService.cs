@@ -1,5 +1,5 @@
-﻿using System.IO;
-using MCSM.Models;
+﻿using MCSM.Models;
+using MCSM.Services.IO;
 using MCSM.Util;
 using MCSM.Util.IO;
 using Serilog;
@@ -12,6 +12,17 @@ namespace MCSM.Services
     /// </summary>
     public class WorkspaceService : LazyAble<WorkspaceService>
     {
+        private readonly FileService _fileService;
+
+        public WorkspaceService(FileService fileService)
+        {
+            _fileService = fileService;
+        }
+
+        public WorkspaceService() : this(FileService.Default)
+        {
+        }
+
         /// <summary>
         ///     Creates a new empty workspace
         /// </summary>
@@ -20,7 +31,9 @@ namespace MCSM.Services
         /// <returns>New workspace</returns>
         public Workspace CreateWorkspace(string workspacePath, string workspaceName)
         {
-            if (ValidateWorkspaceDirectory(workspacePath))
+            var path = _fileService.ComputeAbsolute(workspacePath, _fileService.Path());
+
+            if (ValidateWorkspaceDirectory(path))
             {
                 Log.Debug("Found workspace in {workspacePath}. Create no new one.", workspacePath);
                 //TODO Add loading workspace
@@ -30,13 +43,12 @@ namespace MCSM.Services
             Log.Debug("Found no workspace in {workspacePath}. Create new one {workspaceName}", workspacePath,
                 workspaceName);
 
-            var workspace = new Workspace(workspaceName);
+            var workspace = new Workspace(workspaceName, path);
 
-            workspace.Path.Initialize(workspacePath);
+            _fileService.InitPath(workspacePath, workspace.Path);
 
-            var workspaceFile = File.CreateText(workspace.JsonPath.AbsolutePath);
-            var workspaceJson = JsonUtil.Serialize(workspace);
-            workspaceFile.WriteLine(workspaceJson);
+            var workspaceFile = _fileService.FileWriter(workspace.JsonPath);
+            workspaceFile.WriteLine(JsonUtil.Serialize(workspace));
             workspaceFile.Close();
 
             return workspace;
@@ -49,9 +61,9 @@ namespace MCSM.Services
         /// <returns>True if workspace was deleted successfully</returns>
         public bool DeleteWorkspace(Workspace workspace)
         {
-            if (!ValidateWorkspaceDirectory(workspace.Path.AbsolutePath)) return false;
+            if (!ValidateWorkspaceDirectory(workspace.Path)) return false;
 
-            Directory.Delete(workspace.Path.AbsolutePath, true);
+            _fileService.Delete(workspace.Path);
 
             return true;
         }
@@ -61,9 +73,9 @@ namespace MCSM.Services
         /// </summary>
         /// <param name="workspacePath">Workspace path to test</param>
         /// <returns></returns>
-        public static bool ExistsWorkspaceDirectory(string workspacePath)
+        public bool ExistsWorkspaceDirectory(Path workspacePath)
         {
-            if (Directory.Exists(workspacePath)) return true;
+            if (_fileService.Exists(workspacePath)) return true;
             Log.Debug("{workspacePath} is not a valid directory.", workspacePath);
             return false;
         }
@@ -73,12 +85,12 @@ namespace MCSM.Services
         /// </summary>
         /// <param name="workspacePath">Path to directory for validating workspace</param>
         /// <returns></returns>
-        public static bool ValidateWorkspaceDirectory(string workspacePath)
+        public bool ValidateWorkspaceDirectory(Path workspacePath)
         {
             if (!ExistsWorkspaceDirectory(workspacePath)) return false;
 
             //Look for one workspace.json
-            if (Directory.GetFiles(workspacePath, "workspace.json").Length == 1)
+            if (_fileService.GetFiles(workspacePath, "workspace.json").Length == 1)
             {
                 Log.Debug("Workspace json in {workspacePath} found", workspacePath);
                 return true;

@@ -1,64 +1,80 @@
-﻿using System.IO;
-using MCSM.Models;
+﻿using System.IO.Abstractions.TestingHelpers;
 using MCSM.Services;
+using MCSM.Services.IO;
 using MCSM.Test.Util;
 using MCSM.Util;
 using Xunit;
 
 namespace MCSM.Test.Services
 {
-    [Collection("IO")]
     public class WorkspaceServiceTest : IClassFixture<InitializeClassFixture>
     {
         private const string WorkspacePath = Constants.DefaultWorkspacePath;
         private const string WorkspaceName = Constants.DefaultWorkspaceName;
 
         [Fact]
-        public void When_NoWorkspaceFound_Then_CreateNew()
+        public void When_WorkspaceNotExists_Then_CreateNew()
         {
-            if (WorkspaceService.ValidateWorkspaceDirectory(WorkspacePath)) Directory.Delete(WorkspacePath, true);
+            var fileSystem = new MockFileSystem();
+            var workspaceService = new WorkspaceService(new FileService(fileSystem));
 
-            Assert.NotNull(WorkspaceService.Default.CreateWorkspace(WorkspacePath, WorkspaceName));
+            var workspace = workspaceService.CreateWorkspace(WorkspacePath, WorkspaceName);
 
-            Assert.True(WorkspaceService.ValidateWorkspaceDirectory(WorkspacePath));
+            Assert.True(fileSystem.Directory.Exists(workspace.Path.AbsolutePath));
+            Assert.True(fileSystem.File.Exists(workspace.JsonPath.AbsolutePath));
         }
 
         [Fact]
-        public void When_NoWorkspaceFound_Then_NotDeleteIt()
+        public void When_WorkspaceExists_Then_GetNull()
         {
-            if (WorkspaceService.ValidateWorkspaceDirectory(WorkspacePath)) Directory.Delete(WorkspacePath, true);
+            var fileSystem = new MockFileSystem();
+            var workspaceService = new WorkspaceService(new FileService(fileSystem));
 
-            Assert.False(WorkspaceService.Default.DeleteWorkspace(new Workspace(WorkspaceName)));
+            var workspace = workspaceService.CreateWorkspace(WorkspacePath, WorkspaceName);
+
+            Assert.Null(workspaceService.CreateWorkspace(WorkspacePath, WorkspaceName));
         }
 
         [Fact]
-        public void When_NoWorkspaceJsonFound_Then_NotValid()
+        public void When_WorkspaceJsonMission_Then_NoneValidWorkspace()
         {
-            if (!WorkspaceService.ValidateWorkspaceDirectory(WorkspacePath))
-                WorkspaceService.Default.CreateWorkspace(WorkspacePath, WorkspaceName);
+            var fileSystem = new MockFileSystem();
+            var fileService = new FileService(fileSystem);
+            var workspaceService = new WorkspaceService(fileService);
 
-            File.Delete(WorkspacePath + "/workspace.json");
+            var workspace = workspaceService.CreateWorkspace(WorkspacePath, WorkspaceName);
 
-            Assert.False(WorkspaceService.ValidateWorkspaceDirectory(WorkspacePath));
+            fileService.Delete(workspace.JsonPath);
+
+            Assert.False(workspaceService.ValidateWorkspaceDirectory(workspace.Path));
         }
 
         [Fact]
-        public void When_WorkspaceFound_Then_DeleteIt()
+        public void When_WorkspaceExists_Then_Delete()
         {
-            var workspace = WorkspaceService.Default.CreateWorkspace(WorkspacePath, WorkspaceName);
+            var fileSystem = new MockFileSystem();
+            var fileService = new FileService(fileSystem);
+            var workspaceService = new WorkspaceService(fileService);
 
-            Assert.True(WorkspaceService.Default.DeleteWorkspace(workspace));
+            var workspace = workspaceService.CreateWorkspace(WorkspacePath, WorkspaceName);
 
-            Assert.False(WorkspaceService.ValidateWorkspaceDirectory(WorkspacePath));
+            Assert.True(workspaceService.DeleteWorkspace(workspace));
+
+            Assert.False(fileService.Exists(workspace.Path));
         }
 
         [Fact]
-        public void When_WorkspaceFound_Then_NoCreate()
+        public void When_WorkspaceNotExists_Then_GetFalse()
         {
-            if (!WorkspaceService.ValidateWorkspaceDirectory(WorkspacePath))
-                WorkspaceService.Default.CreateWorkspace(WorkspacePath, WorkspaceName);
+            var fileSystem = new MockFileSystem();
+            var fileService = new FileService(fileSystem);
+            var workspaceService = new WorkspaceService(fileService);
 
-            Assert.Null(WorkspaceService.Default.CreateWorkspace(WorkspacePath, WorkspaceName));
+            var workspace = workspaceService.CreateWorkspace(WorkspacePath, WorkspaceName);
+
+            workspaceService.DeleteWorkspace(workspace);
+
+            Assert.False(workspaceService.DeleteWorkspace(workspace));
         }
     }
 }

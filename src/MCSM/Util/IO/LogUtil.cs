@@ -5,7 +5,7 @@ namespace MCSM.Util.IO
     /// <summary>
     ///     Utility class for managing Serilog logger globally
     /// </summary>
-    public class LogUtil
+    public static class LogUtil
     {
         private static readonly bool _initialized = false;
 

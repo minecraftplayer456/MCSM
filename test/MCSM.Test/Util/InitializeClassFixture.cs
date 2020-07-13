@@ -8,10 +8,6 @@ namespace MCSM.Test.Util
         public InitializeClassFixture()
         {
             LogUtil.Initialize();
-
-            /*if (Directory.Exists(Constants.DefaultWorkspacePath))
-                Directory.Delete(Constants.DefaultWorkspacePath, true);
-            WorkspaceService.Default.CreateWorkspace(Constants.DefaultWorkspaceName, Constants.DefaultWorkspacePath);*/
         }
 
         public void Dispose()

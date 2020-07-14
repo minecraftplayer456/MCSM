@@ -20,7 +20,7 @@ namespace MCSM.Util.IO
             Log.Logger = new LoggerConfiguration()
                 .MinimumLevel.Is(ConfigurationConstants.DefautLogLevel)
                 .WriteTo.Console()
-                .WriteTo.File("logs/latest.txt")
+                .WriteTo.File("logs\\latest.txt")
                 .CreateLogger();
         }
     }

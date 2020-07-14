@@ -120,7 +120,7 @@ namespace MCSM.Test.Services.IO
             var fileSystem = new MockFileSystem();
             var fileService = new FileService(fileSystem);
 
-            var path = fileService.Path(".\\path.txt", isDirectory: false);
+            var path = fileService.Path("path.txt", isDirectory: false);
 
             fileService.InitPath(".\\", path);
 
@@ -140,7 +140,7 @@ namespace MCSM.Test.Services.IO
             var fileSystem = new MockFileSystem();
             var fileService = new FileService(fileSystem);
 
-            var path = fileService.Path(".\\path.txt", isDirectory: false);
+            var path = fileService.Path("path.txt", isDirectory: false);
 
             fileService.InitPath(".\\", path);
 
@@ -159,7 +159,7 @@ namespace MCSM.Test.Services.IO
             var fileSystem = new MockFileSystem();
             var fileService = new FileService(fileSystem);
 
-            var path = fileService.Path(".\\path");
+            var path = fileService.Path("path.txt");
 
             fileService.InitPath(".\\", path);
 
@@ -172,7 +172,7 @@ namespace MCSM.Test.Services.IO
             var fileSystem = new MockFileSystem();
             var fileService = new FileService(fileSystem);
 
-            var path = fileService.Path(".\\path");
+            var path = fileService.Path("path.txt");
 
             fileService.InitPath(".\\", path);
 

@@ -18,7 +18,7 @@ namespace MCSM.Test.Services.IO
             var path1 = fileService.Path("test1", path);
             var path2 = fileService.Path("test2", path, false);
 
-            fileService.InitPath(".\\", path);
+            fileService.InitPath("\\", path);
 
             Assert.True(fileSystem.Directory.Exists(path.AbsolutePath));
             Assert.True(fileSystem.Directory.Exists(path1.AbsolutePath));
@@ -33,8 +33,8 @@ namespace MCSM.Test.Services.IO
 
             var path = fileService.Path();
 
-            var path1 = fileService.InitPath(".\\", path);
-            var path2 = fileService.InitPath(".\\", path);
+            var path1 = fileService.InitPath("\\", path);
+            var path2 = fileService.InitPath("\\", path);
 
             Assert.Equal(path1, path2);
         }
@@ -49,7 +49,7 @@ namespace MCSM.Test.Services.IO
             var path1 = fileService.Path("test1", path);
             var path2 = fileService.Path("test2", path, false);
 
-            fileService.InitPath(".\\", path);
+            fileService.InitPath("\\", path);
 
             fileService.Delete(path1);
             fileService.Delete(path2);
@@ -68,7 +68,7 @@ namespace MCSM.Test.Services.IO
             var path1 = fileService.Path("test1", path);
             var path2 = fileService.Path("test2", path, false);
 
-            fileService.InitPath(".\\", path);
+            fileService.InitPath("\\", path);
 
             Assert.True(fileService.Exists(path1));
             Assert.True(fileService.Exists(path2));
@@ -94,11 +94,11 @@ namespace MCSM.Test.Services.IO
             var fileSystem = new MockFileSystem();
             var fileService = new FileService(fileSystem);
 
-            var path = fileService.Path(".\\path");
+            var path = fileService.Path("path");
             var path1 = fileService.Path("test1", path);
             var path2 = fileService.Path("test2", path, false);
 
-            fileService.InitPath(".\\", path);
+            fileService.InitPath("\\", path);
 
             Assert.Equal(new[] {path1.AbsolutePath, path2.AbsolutePath}, fileService.GetFiles(path));
         }
@@ -109,7 +109,7 @@ namespace MCSM.Test.Services.IO
             var fileSystem = new MockFileSystem();
             var fileService = new FileService(fileSystem);
 
-            var path = fileService.Path(".\\path", isDirectory: false);
+            var path = fileService.Path("path", isDirectory: false);
 
             Assert.Equal(fileService.GetFiles(path), new string[] { });
         }
@@ -122,7 +122,7 @@ namespace MCSM.Test.Services.IO
 
             var path = fileService.Path("path.txt", isDirectory: false);
 
-            fileService.InitPath(".\\", path);
+            fileService.InitPath("", path);
 
             var writer = fileService.FileWriter(path);
             writer.WriteLine("Hi");
@@ -142,7 +142,7 @@ namespace MCSM.Test.Services.IO
 
             var path = fileService.Path("path.txt", isDirectory: false);
 
-            fileService.InitPath(".\\", path);
+            fileService.InitPath("", path);
 
             var writer = fileService.FileWriter(path);
             writer.WriteLine("Hi");
@@ -160,10 +160,6 @@ namespace MCSM.Test.Services.IO
             var fileService = new FileService(fileSystem);
 
             var path = fileService.Path("path.txt");
-
-            fileService.InitPath(".\\", path);
-
-            Assert.Null(fileService.FileWriter(path));
         }
 
         [Fact]
@@ -174,7 +170,7 @@ namespace MCSM.Test.Services.IO
 
             var path = fileService.Path("path.txt");
 
-            fileService.InitPath(".\\", path);
+            fileService.InitPath("\\", path);
 
             Assert.Null(fileService.FileReader(path));
         }

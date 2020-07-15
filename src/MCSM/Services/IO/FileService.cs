@@ -58,7 +58,8 @@ namespace MCSM.Services.IO
                 return path;
             }
 
-            var absolutePath = _fs.Path.GetFullPath(_fs.Path.Combine(rootPath, path.RelativePath));
+            var absolutePath = _fs.Path.GetFullPath(
+                _fs.Path.Combine(rootPath, path.RelativePath));
 
             Log.Debug("Resolve path {relativePath} to {absolutePath}", path.RelativePath, absolutePath);
 

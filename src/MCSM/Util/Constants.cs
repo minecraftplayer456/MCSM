@@ -7,8 +7,12 @@ namespace MCSM.Util
     /// </summary>
     public static class Constants
     {
+        public const string ProgrammeVersion = "Alpha-0.1.0";
+
         public const string DefaultWorkspacePath = ".\\Workspace";
         public const string DefaultWorkspaceName = "DefaultWorkspace";
+
+        public const LogEventLevel DefaultUiConsoleLogLevel = LogEventLevel.Fatal;
     }
 
     /// <summary>

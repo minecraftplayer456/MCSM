@@ -6,6 +6,7 @@ packages
 #Visual Studio
 .vs
 
+*.DotSettings
 *.DotSettings.*
 
 #Rider

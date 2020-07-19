@@ -1,6 +1,4 @@
-﻿using MCSM.Ui;
-
-namespace MCSM
+﻿namespace MCSM
 {
     internal class Program
     {

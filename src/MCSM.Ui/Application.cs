@@ -4,13 +4,13 @@ namespace MCSM.Ui
 {
     public class Application
     {
-        private IUiManager _uiManager;
+        private readonly IUiManager _uiManager;
 
         public Application(IUiManager uiManager = null)
         {
-            if(uiManager == null) _uiManager = new UiManager();
+            if (uiManager == null) _uiManager = new UiManager();
         }
-        
+
         public void Start()
         {
             _uiManager.OpenUi();

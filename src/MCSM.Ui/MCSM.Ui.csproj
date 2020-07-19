@@ -5,11 +5,15 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\MCSM.Core\MCSM.Core.csproj" />
+        <ProjectReference Include="..\MCSM.Core\MCSM.Core.csproj"/>
     </ItemGroup>
 
     <ItemGroup>
-      <PackageReference Include="Terminal.Gui" Version="0.89.0" />
+        <PackageReference Include="Terminal.Gui" Version="0.89.0"/>
+    </ItemGroup>
+
+    <ItemGroup>
+        <Folder Include="Event"/>
     </ItemGroup>
 
 </Project>

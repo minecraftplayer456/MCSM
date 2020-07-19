@@ -3,26 +3,23 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Reactive.Disposables;
 using System.Runtime.CompilerServices;
-using Reactive.Bindings;
-using Reactive.Bindings.Extensions;
 
-namespace MCSM.Ui.Util
+namespace MCSM.Ui.Util.Ui
 {
-    public interface IViewFor<TVm> where TVm : ReactiveObject
+    public interface IReactiveObject : INotifyPropertyChanged, IDisposable
     {
-        public TVm ViewModel { get; }
     }
 
-    public abstract class ReactiveObject : INotifyPropertyChanged, IDisposable
+    public abstract class ReactiveObject : IReactiveObject
     {
         protected readonly CompositeDisposable Disposables = new CompositeDisposable();
+
+        public event PropertyChangedEventHandler PropertyChanged;
 
         public void Dispose()
         {
             Disposables.Dispose();
         }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         protected bool SetProperty<T>(ref T field, T value, [CallerMemberName] string propertyName = null)
         {
@@ -31,17 +28,6 @@ namespace MCSM.Ui.Util
             field = value;
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             return true;
-        }
-    }
-
-    public class NamedViewModel : ReactiveObject
-    {
-        public readonly ReactiveProperty<string> ViewName;
-
-        public NamedViewModel(string name)
-        {
-            ViewName = new ReactiveProperty<string>(name)
-                .AddTo(Disposables);
         }
     }
 }

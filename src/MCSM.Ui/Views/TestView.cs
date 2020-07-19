@@ -1,5 +1,5 @@
 ﻿using System;
-using MCSM.Ui.Util;
+using MCSM.Ui.Util.Ui;
 using MCSM.Ui.ViewModel;
 using Terminal.Gui;
 

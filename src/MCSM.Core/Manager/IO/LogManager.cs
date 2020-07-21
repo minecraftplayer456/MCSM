@@ -1,7 +1,8 @@
 ﻿using MCSM.Core.Util;
 using Serilog;
+using Serilog.Events;
 
-namespace MCSM.Core.Manager
+namespace MCSM.Core.Manager.IO
 {
     /// <summary>
     ///     Manager for logger initialization
@@ -12,10 +13,10 @@ namespace MCSM.Core.Manager
 
     public class LogManager : ILogManager
     {
-        public LogManager()
+        public LogManager(LogEventLevel logLevel)
         {
             Log.Logger = new LoggerConfiguration()
-                .MinimumLevel.Is(Constants.LogLevel)
+                .MinimumLevel.Is(logLevel)
                 .Enrich.FromLogContext()
                 .WriteTo.Console(
                     outputTemplate:
@@ -24,6 +25,10 @@ namespace MCSM.Core.Manager
                     outputTemplate:
                     "{Timestamp:yyyy-MM-dd HH:mm:ss.fff zzz} [{Level:u3}] ({SourceContext:1}) {Message}{NewLine}{Exception}")
                 .CreateLogger();
+        }
+
+        public LogManager() : this(Constants.LogLevel)
+        {
         }
     }
 }

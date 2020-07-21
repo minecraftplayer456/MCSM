@@ -1,4 +1,4 @@
-﻿using MCSM.Core.Manager;
+﻿using MCSM.Core.Manager.IO;
 using MCSM.Core.Util;
 using Serilog;
 
@@ -34,7 +34,7 @@ namespace MCSM
 
         public void Start()
         {
-            _log.Information("Starting MCSM - v.{version}", Constants.MCSMVersion);
+            _log.Information("Starting MCSM - v.{version}", Constants.McsmVersion);
         }
 
         public void Stop()

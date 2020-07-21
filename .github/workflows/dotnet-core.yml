@@ -17,7 +17,14 @@ jobs:
         dotnet-version: 3.1.101
     - name: Install dependencies
       run: dotnet restore
-    - name: Build
-      run: dotnet build --configuration Release --no-restore
-    - name: Test
-      run: dotnet test --no-restore --verbosity normal
+    - name: Run sonarscanner
+      uses: Secbyte/dotnet-sonarscanner@v2.3
+      with:
+        buildCommand: dotnet build .
+        testCommand: dotnet test .
+        projectKey: minecraftplayer456_MCSM
+        projectName: MCSM
+        sonarOrganisation: minecraftplayer456
+      env:
+        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

@@ -19,7 +19,7 @@ namespace MCSM.Core.Test.Manager.IO
             var directory = fileManager.Path("directory", path);
             var file = fileManager.Path("file.txt", path, false);
 
-            fileManager.InitPath("./", path);
+            fileManager.InitPath("/", path);
 
             Assert.True(fileSystem.Directory.Exists(fileSystem.Path.GetFullPath("./")));
             Assert.True(fileSystem.Directory.Exists(fileSystem.Path.GetFullPath("./directory")));
@@ -36,11 +36,11 @@ namespace MCSM.Core.Test.Manager.IO
             var directory = fileManager.Path("directory", path, recursiveInit: false);
             var file = fileManager.Path("file.txt", path, false, false);
 
-            fileManager.InitPath("./", path);
+            fileManager.InitPath("/", path);
 
-            Assert.True(fileSystem.Directory.Exists(fileSystem.Path.GetFullPath("./")));
-            Assert.False(fileSystem.Directory.Exists(fileSystem.Path.GetFullPath("./directory")));
-            Assert.False(fileSystem.File.Exists(fileSystem.Path.GetFullPath("./file.txt")));
+            Assert.True(fileSystem.Directory.Exists(fileSystem.Path.GetFullPath("/")));
+            Assert.False(fileSystem.Directory.Exists(fileSystem.Path.GetFullPath("/directory")));
+            Assert.False(fileSystem.File.Exists(fileSystem.Path.GetFullPath("/file.txt")));
         }
 
         [Fact]
@@ -51,11 +51,11 @@ namespace MCSM.Core.Test.Manager.IO
 
             var path = fileManager.Path();
 
-            fileManager.ComputeAbsolute("./", path);
+            fileManager.ComputeAbsolute("/", path);
 
             var absolutePath = path.AbsolutePath;
 
-            Assert.Equal(fileManager.ComputeAbsolute("./", path).AbsolutePath, absolutePath);
+            Assert.Equal(fileManager.ComputeAbsolute("/", path).AbsolutePath, absolutePath);
         }
 
         [Fact]
@@ -64,15 +64,15 @@ namespace MCSM.Core.Test.Manager.IO
             var fileSystem = new MockFileSystem();
             var fileManager = new FileManager(fileSystem);
 
-            fileSystem.Directory.CreateDirectory("./directory");
+            fileSystem.Directory.CreateDirectory("/directory");
 
             var path = fileManager.Path("directory");
 
-            fileManager.ComputeAbsolute("./", path);
+            fileManager.ComputeAbsolute("/", path);
 
             fileManager.Delete(path);
 
-            Assert.False(fileSystem.Directory.Exists("./directory"));
+            Assert.False(fileSystem.Directory.Exists("/directory"));
         }
 
         [Fact]
@@ -81,15 +81,15 @@ namespace MCSM.Core.Test.Manager.IO
             var fileSystem = new MockFileSystem();
             var fileManager = new FileManager(fileSystem);
 
-            fileSystem.File.Create("./file.txt").Close();
+            fileSystem.File.Create("/file.txt").Close();
 
             var path = fileManager.Path("file.txt", isDirectory: false);
 
-            fileManager.ComputeAbsolute("./", path);
+            fileManager.ComputeAbsolute("/", path);
 
             fileManager.Delete(path);
 
-            Assert.False(fileSystem.File.Exists("./file.txt"));
+            Assert.False(fileSystem.File.Exists("/file.txt"));
         }
 
         [Fact]
@@ -98,14 +98,14 @@ namespace MCSM.Core.Test.Manager.IO
             var fileSystem = new MockFileSystem();
             var fileManager = new FileManager(fileSystem);
 
-            fileSystem.Directory.CreateDirectory("./directory");
-            fileSystem.File.Create("./file.txt").Close();
+            fileSystem.Directory.CreateDirectory("/directory");
+            fileSystem.File.Create("/file.txt").Close();
 
             var directory = fileManager.Path("directory");
             var file = fileManager.Path("file.txt", isDirectory: false);
 
-            fileManager.ComputeAbsolute("./", directory);
-            fileManager.ComputeAbsolute("./", file);
+            fileManager.ComputeAbsolute("/", directory);
+            fileManager.ComputeAbsolute("/", file);
 
             Assert.True(fileManager.Exists(directory));
             Assert.True(fileManager.Exists(file));
@@ -120,8 +120,8 @@ namespace MCSM.Core.Test.Manager.IO
             var directory = fileManager.Path("directory");
             var file = fileManager.Path("file.txt", isDirectory: false);
 
-            fileManager.ComputeAbsolute("./", directory);
-            fileManager.ComputeAbsolute("./", file);
+            fileManager.ComputeAbsolute("/", directory);
+            fileManager.ComputeAbsolute("/", file);
 
             Assert.False(fileManager.Exists(directory));
             Assert.False(fileManager.Exists(file));
@@ -133,13 +133,13 @@ namespace MCSM.Core.Test.Manager.IO
             var fileSystem = new MockFileSystem();
             var fileManager = new FileManager(fileSystem);
 
-            fileSystem.Directory.CreateDirectory("./directory");
-            fileSystem.File.Create("./directory/file.txt").Close();
+            fileSystem.Directory.CreateDirectory("/directory");
+            fileSystem.File.Create("/directory/file.txt").Close();
 
             var directory = fileManager.Path("directory");
             var file = fileManager.Path("file.txt", directory, false);
 
-            fileManager.InitPath("./", directory);
+            fileManager.InitPath("/", directory);
 
             Assert.EndsWith("file.txt", fileManager.GetFiles(directory).Last());
         }
@@ -150,11 +150,11 @@ namespace MCSM.Core.Test.Manager.IO
             var fileSystem = new MockFileSystem();
             var fileManager = new FileManager(fileSystem);
 
-            fileSystem.File.Create("./file.txt").Close();
+            fileSystem.File.Create("/file.txt").Close();
 
             var file = fileManager.Path("file.txt", isDirectory: false);
 
-            fileManager.ComputeAbsolute("./", file);
+            fileManager.ComputeAbsolute("/", file);
 
             Assert.Empty(fileManager.GetFiles(file));
         }
@@ -165,17 +165,17 @@ namespace MCSM.Core.Test.Manager.IO
             var fileSystem = new MockFileSystem();
             var fileManager = new FileManager(fileSystem);
 
-            fileSystem.File.Create("./file.txt").Close();
+            fileSystem.File.Create("/file.txt").Close();
 
             var file = fileManager.Path("file.txt", isDirectory: false);
 
-            fileManager.ComputeAbsolute("./", file);
+            fileManager.ComputeAbsolute("/", file);
 
             var writer = fileManager.FileWriter(file);
             writer.Write("Hello World!");
             writer.Close();
 
-            var reader = new StreamReader(fileSystem.File.OpenRead("./file.txt"));
+            var reader = new StreamReader(fileSystem.File.OpenRead("/file.txt"));
             Assert.Equal("Hello World!", reader.ReadLine());
             reader.Close();
         }
@@ -186,11 +186,11 @@ namespace MCSM.Core.Test.Manager.IO
             var fileSystem = new MockFileSystem();
             var fileManager = new FileManager(fileSystem);
 
-            fileSystem.Directory.CreateDirectory("./directory");
+            fileSystem.Directory.CreateDirectory("/directory");
 
             var directory = fileManager.Path("directory");
 
-            fileManager.ComputeAbsolute("./", directory);
+            fileManager.ComputeAbsolute("/", directory);
 
             Assert.Null(fileManager.FileWriter(directory));
         }
@@ -201,13 +201,13 @@ namespace MCSM.Core.Test.Manager.IO
             var fileSystem = new MockFileSystem();
             var fileManager = new FileManager(fileSystem);
 
-            fileSystem.File.Create("./file.txt").Close();
+            fileSystem.File.Create("/file.txt").Close();
 
             var file = fileManager.Path("file.txt", isDirectory: false);
 
-            fileManager.ComputeAbsolute("./", file);
+            fileManager.ComputeAbsolute("/", file);
 
-            var writer = new StreamWriter(fileSystem.File.OpenWrite("./file.txt"));
+            var writer = new StreamWriter(fileSystem.File.OpenWrite("/file.txt"));
             writer.Write("Hello World!");
             writer.Close();
 
@@ -222,11 +222,11 @@ namespace MCSM.Core.Test.Manager.IO
             var fileSystem = new MockFileSystem();
             var fileManager = new FileManager(fileSystem);
 
-            fileSystem.Directory.CreateDirectory("./directory");
+            fileSystem.Directory.CreateDirectory("/directory");
 
             var directory = fileManager.Path("directory");
 
-            fileManager.ComputeAbsolute("./", directory);
+            fileManager.ComputeAbsolute("/", directory);
 
             Assert.Null(fileManager.FileReader(directory));
         }

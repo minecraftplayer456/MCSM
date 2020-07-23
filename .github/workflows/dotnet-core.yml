@@ -19,6 +19,11 @@ jobs:
     - name: Install dependencies
       run: dotnet restore
     - name: Build
-        run: dotnet build --configuration Release --no-restore
+      run: dotnet build --configuration Release --no-restore
     - name: Test
-        run: dotnet test --no-restore --verbosity normal
+      run: dotnet test --no-restore --verbosity normal --collect:"XPlat Code Coverage"
+    - name: Collect coverage
+      uses: codacy/codacy-coverage-reporter-action@master
+      with:
+        project-token: %{{ secrets.CODACY_PROJECT_TOKEN }}
+        coverage-reports: coverage.cobertura.xml

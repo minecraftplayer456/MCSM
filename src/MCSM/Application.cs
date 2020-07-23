@@ -1,5 +1,7 @@
-﻿using MCSM.Core.Manager.IO;
+﻿using System.IO.Abstractions;
+using MCSM.Core.Manager.IO;
 using MCSM.Core.Util;
+using MCSM.Ui.Manager;
 using Serilog;
 
 namespace MCSM
@@ -14,6 +16,16 @@ namespace MCSM
         ///     Returns current ILogManager
         /// </summary>
         public ILogManager LogManager { get; }
+
+        /// <summary>
+        ///     Returns current IFileManager
+        /// </summary>
+        public IFileManager FileManager { get; }
+
+        /// <summary>
+        ///     Returns current UiManager
+        /// </summary>
+        public IUiManager UiManager { get; }
 
         /// <summary>
         ///     Starts the application
@@ -33,10 +45,17 @@ namespace MCSM
         public Application()
         {
             LogManager = new LogManager();
+            FileManager = new FileManager(new FileSystem());
+            UiManager = new UiManager();
+
             _log = Log.ForContext<Application>();
         }
 
         public ILogManager LogManager { get; }
+
+        public IFileManager FileManager { get; }
+
+        public IUiManager UiManager { get; }
 
         public void Start()
         {

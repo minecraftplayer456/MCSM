@@ -137,7 +137,7 @@ namespace MCSM.Core.Test.Manager.IO
             fileSystem.File.Create("/directory/file.txt").Close();
 
             var directory = fileManager.Path("directory");
-            var file = fileManager.Path("file.txt", directory, false);
+            fileManager.Path("file.txt", directory, false);
 
             fileManager.InitPath("/", directory);
 

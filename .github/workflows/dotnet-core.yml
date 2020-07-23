@@ -28,6 +28,8 @@ jobs:
         sonarOrganisation: minecraftplayer456
         beginArguments: >
           /d:sonar.verbose="true"
+          /d:sonar.cs.opencover.reportsPaths='"**/coverage.cobertura.xml"'
+          /d:sonar.cs.vstest.reportsPath='"**/*.trx"'
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

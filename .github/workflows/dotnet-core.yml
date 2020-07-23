@@ -7,6 +7,7 @@ on:
 jobs:
   build:
 
+    continue-on-error: true
     runs-on: ubuntu-latest
 
     steps:
@@ -21,10 +22,12 @@ jobs:
       uses: Secbyte/dotnet-sonarscanner@v2.3
       with:
         buildCommand: dotnet build .
-        testCommand: dotnet test .
+        testCommand: dotnet test . --collect:"XPlat Code Coverage" --logger trx
         projectKey: minecraftplayer456_MCSM
         projectName: MCSM
         sonarOrganisation: minecraftplayer456
+        beginArguments: >
+          /d:sonar.verbose="true"
       env:
         SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

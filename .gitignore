@@ -3,6 +3,9 @@ obj
 bin
 packages
 
+#Test
+TestResults
+
 #Visual Studio
 .vs
 

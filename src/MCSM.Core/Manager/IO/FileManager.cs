@@ -61,7 +61,7 @@ namespace MCSM.Core.Manager.IO
         /// <param name="path">path to a directory with entries</param>
         /// <param name="searchPattern">search pattern for finding</param>
         /// <returns>entries of directory</returns>
-        public string[] GetFiles(Path path, string searchPattern = "*");
+        public IEnumerable<string> GetFiles(Path path, string searchPattern = "*");
 
         /// <summary>
         ///     Creates new stream writer to write to a file. Path must be a file or the return will be null.
@@ -166,10 +166,9 @@ namespace MCSM.Core.Manager.IO
             return path.IsDirectory ? _fs.Directory.Exists(path.AbsolutePath) : _fs.File.Exists(path.AbsolutePath);
         }
 
-        public string[] GetFiles(Path path, string searchPattern = "*")
+        public IEnumerable<string> GetFiles(Path path, string searchPattern = "*")
         {
-            if (path.IsDirectory)
-                return _fs.Directory.GetFileSystemEntries(path.AbsolutePath, searchPattern);
+            if (path.IsDirectory) return _fs.Directory.GetFileSystemEntries(path.AbsolutePath, searchPattern);
 
             _log.Warning("Path {absolutePath} is not a directory. Can not get files", path.AbsolutePath);
             return new string[] { };
@@ -203,12 +202,6 @@ namespace MCSM.Core.Manager.IO
     /// </summary>
     public class Path
     {
-        public readonly List<Path> Children;
-        public readonly bool IsDirectory;
-        public readonly Path Parent;
-        public readonly bool RecursiveInit;
-        public readonly string RelativePath;
-
         internal Path(string relativePath, Path parent, bool isDirectory, bool recursiveInit)
         {
             RelativePath = relativePath;
@@ -217,6 +210,12 @@ namespace MCSM.Core.Manager.IO
             RecursiveInit = recursiveInit;
             Children = new List<Path>();
         }
+
+        public List<Path> Children { get; }
+        public bool IsDirectory { get; }
+        public Path Parent { get; }
+        public bool RecursiveInit { get; }
+        public string RelativePath { get; }
 
         public string AbsolutePath { get; internal set; }
     }

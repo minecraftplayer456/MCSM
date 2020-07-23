@@ -11,6 +11,11 @@ namespace MCSM
     public interface IApplication
     {
         /// <summary>
+        ///     Returns current ILogManager
+        /// </summary>
+        public ILogManager LogManager { get; }
+
+        /// <summary>
         ///     Starts the application
         /// </summary>
         void Start();
@@ -24,13 +29,14 @@ namespace MCSM
     public class Application : IApplication
     {
         private readonly ILogger _log;
-        public readonly ILogManager LogManager;
 
         public Application()
         {
             LogManager = new LogManager();
             _log = Log.ForContext<Application>();
         }
+
+        public ILogManager LogManager { get; }
 
         public void Start()
         {

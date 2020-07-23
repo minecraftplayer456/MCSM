@@ -16,8 +16,8 @@ namespace MCSM.Core.Test.Manager.IO
             var fileManager = new FileManager(fileSystem);
 
             var path = fileManager.Path();
-            var directory = fileManager.Path("directory", path);
-            var file = fileManager.Path("file.txt", path, false);
+            fileManager.Path("directory", path);
+            fileManager.Path("file.txt", path, false);
 
             fileManager.InitPath("/", path);
 
@@ -33,8 +33,8 @@ namespace MCSM.Core.Test.Manager.IO
             var fileManager = new FileManager(fileSystem);
 
             var path = fileManager.Path();
-            var directory = fileManager.Path("directory", path, recursiveInit: false);
-            var file = fileManager.Path("file.txt", path, false, false);
+            fileManager.Path("directory", path, recursiveInit: false);
+            fileManager.Path("file.txt", path, false, false);
 
             fileManager.InitPath("/", path);
 

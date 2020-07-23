@@ -22,9 +22,8 @@ jobs:
       run: dotnet build --configuration Release --no-restore
     - name: Test
       run: dotnet test --no-restore --verbosity normal /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=opencover
-    - run: cd $GITHUB_WORKSPACE/test/MCSM.Core.Test/TestResults && ls
     - name: Collect coverage
       uses: codacy/codacy-coverage-reporter-action@master
       with:
         project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-        coverage-reports: $GITHUB_WORKSPACE/test/**/TestResults/coverage.opencover.xml
+        coverage-reports: $GITHUB_WORKSPACE/test/MCSM.Core.Test/TestResults/coverage.opencover.xml,$GITHUB_WORKSPACE/test/MCSM.Ui.Test/TestResults/coverage.opencover.xml

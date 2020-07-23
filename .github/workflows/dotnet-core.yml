@@ -18,18 +18,7 @@ jobs:
         dotnet-version: 3.1.101
     - name: Install dependencies
       run: dotnet restore
-    - name: Run sonarscanner
-      uses: Secbyte/dotnet-sonarscanner@v2.3
-      with:
-        buildCommand: dotnet build .
-        testCommand: dotnet test . --collect:"XPlat Code Coverage" --logger trx
-        projectKey: minecraftplayer456_MCSM
-        projectName: MCSM
-        sonarOrganisation: minecraftplayer456
-        beginArguments: >
-          /d:sonar.verbose="true"
-          /d:sonar.cs.opencover.reportsPaths='"**/coverage.cobertura.xml"'
-          /d:sonar.cs.vstest.reportsPath='"**/*.trx"'
-      env:
-        SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+    - name: Build
+        run: dotnet build --configuration Release --no-restore
+    - name: Test
+        run: dotnet test --no-restore --verbosity normal

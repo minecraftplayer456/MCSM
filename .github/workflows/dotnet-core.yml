@@ -21,9 +21,9 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Test
-      run: dotnet test --no-restore --verbosity normal --collect:"XPlat Code Coverage"
+      run: dotnet test --no-restore --verbosity normal /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=opencover
     - name: Collect coverage
       uses: codacy/codacy-coverage-reporter-action@master
       with:
         project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-        coverage-reports: coverage.cobertura.xml
+        coverage-reports: /home/runner/work/MCSM/MCSM/test/*/TestResults/coverage.opencover.xml

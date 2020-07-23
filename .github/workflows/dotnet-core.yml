@@ -26,4 +26,4 @@ jobs:
       uses: codacy/codacy-coverage-reporter-action@master
       with:
         project-token: ${{ secrets.CODACY_PROJECT_TOKEN }}
-        coverage-reports: /home/runner/work/MCSM/MCSM/test/MCSM.Core.Test/TestResults/coverage.opencover.xml,/home/runner/work/MCSM/MCSM/test/MCSM.UI.Test/TestResults/coverage.opencover.xml
+        coverage-reports: ./TestResults/coverage.opencover.xml

@@ -20,7 +20,7 @@ jobs:
     - name: Build
       run: dotnet build --configuration Release --no-restore
     - name: Test
-      run: dotnet test --no-restore --verbosity minimal /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=opencover /p:IncludeTestAssembly=true
+      run: dotnet test --configuration Release --no-restore --verbosity normal /p:CollectCoverage=true /p:CoverletOutput=TestResults/ /p:CoverletOutputFormat=opencover /p:IncludeTestAssembly=true
     - name: Collect coverage
       uses: codacy/codacy-coverage-reporter-action@master
       with:

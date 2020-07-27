@@ -1,10 +1,14 @@
-﻿using Serilog.Events;
+﻿using System.Reflection;
+using Serilog.Events;
 
 namespace MCSM.Core.Util
 {
+    /// <summary>
+    ///     Class to hold constants. Some of them depends on configuration
+    /// </summary>
     public static class Constants
     {
-        public static readonly string McsmVersion = "Alpha-0.1.0";
+        public static readonly string McsmVersion = Assembly.GetExecutingAssembly().GetName().Version?.ToString();
 
         #region ConfigurationConstants
 

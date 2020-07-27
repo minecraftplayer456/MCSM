@@ -1,8 +1,10 @@
 ﻿using System.IO.Abstractions;
 using MCSM.Core.Manager.IO;
 using MCSM.Core.Util;
-using MCSM.Ui.Manager;
+using MCSM.Ui.Cli;
+using MCSM.Ui.Repl;
 using Serilog;
+using Serilog.Events;
 
 namespace MCSM
 {
@@ -23,14 +25,14 @@ namespace MCSM
         public IFileManager FileManager { get; }
 
         /// <summary>
-        ///     Returns current UiManager
+        ///     Current repl instance
         /// </summary>
-        public IUiManager UiManager { get; }
+        public IRepl Repl { get; }
 
         /// <summary>
         ///     Starts the application
         /// </summary>
-        void Start();
+        void Start(string[] args);
 
         /// <summary>
         ///     Stops the application
@@ -46,25 +48,36 @@ namespace MCSM
         {
             LogManager = new LogManager();
             FileManager = new FileManager(new FileSystem());
-            UiManager = new UiManager();
+            Repl = new Repl();
 
             _log = Log.ForContext<Application>();
         }
 
         public ILogManager LogManager { get; }
-
         public IFileManager FileManager { get; }
+        public IRepl Repl { get; }
 
-        public IUiManager UiManager { get; }
-
-        public void Start()
+        public void Start(string[] args)
         {
             _log.Information("Starting MCSM - v.{version}", Constants.McsmVersion);
+
+            var cli = new Cli();
+
+            Configure(cli.Parse(args));
+
+            Repl.Run();
         }
 
         public void Stop()
         {
             _log.Information("Stopping MCSM");
+
+            Repl.Stop();
+        }
+
+        private void Configure(CliResult result)
+        {
+            if (result.Debug) LogManager.LogLevel = LogEventLevel.Verbose;
         }
     }
 }

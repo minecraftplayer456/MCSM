@@ -21,6 +21,7 @@
 
     <ItemGroup>
         <ProjectReference Include="..\..\src\MCSM.Ui\MCSM.Ui.csproj"/>
+        <ProjectReference Include="..\MCSM.Core.Test\MCSM.Core.Test.csproj"/>
     </ItemGroup>
 
 </Project>

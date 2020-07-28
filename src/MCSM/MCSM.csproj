@@ -8,6 +8,7 @@
     </PropertyGroup>
 
     <ItemGroup>
+      <ProjectReference Include="..\MCSM.Core\MCSM.Core.csproj" />
       <ProjectReference Include="..\MCSM.Ui\MCSM.Ui.csproj" />
     </ItemGroup>
 

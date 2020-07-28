@@ -2,7 +2,7 @@
 using System.CommandLine;
 using System.CommandLine.Help;
 using System.CommandLine.Invocation;
-using MCSM.Core.Util;
+using MCSM.Api.Util;
 
 namespace MCSM.Ui.Repl.Commands
 {
@@ -41,7 +41,6 @@ namespace MCSM.Ui.Repl.Commands
 
         public void Execute()
         {
-            
         }
     }
 }

@@ -1,7 +1,7 @@
 ﻿using System.Reflection;
 using Serilog.Events;
 
-namespace MCSM.Core.Util
+namespace MCSM.Api.Util
 {
     /// <summary>
     ///     Class to hold constants. Some of them depends on configuration

@@ -1,6 +1,9 @@
 ﻿using System.IO.Abstractions;
+using MCSM.Api;
+using MCSM.Api.Manager.IO;
+using MCSM.Api.Ui;
+using MCSM.Api.Util;
 using MCSM.Core.Manager.IO;
-using MCSM.Core.Util;
 using MCSM.Ui.Cli;
 using MCSM.Ui.Repl;
 using Serilog;
@@ -8,38 +11,6 @@ using Serilog.Events;
 
 namespace MCSM
 {
-    /// <summary>
-    ///     Application class which starts, controls and stops the application. Contains all managers and give them their
-    ///     dependencies.
-    /// </summary>
-    public interface IApplication
-    {
-        /// <summary>
-        ///     Returns current ILogManager
-        /// </summary>
-        public ILogManager LogManager { get; }
-
-        /// <summary>
-        ///     Returns current IFileManager
-        /// </summary>
-        public IFileManager FileManager { get; }
-
-        /// <summary>
-        ///     Current repl instance
-        /// </summary>
-        public IRepl Repl { get; }
-
-        /// <summary>
-        ///     Starts the application
-        /// </summary>
-        void Start(string[] args);
-
-        /// <summary>
-        ///     Stops the application
-        /// </summary>
-        void Stop();
-    }
-
     public class Application : IApplication
     {
         private readonly ILogger _log;
@@ -77,7 +48,7 @@ namespace MCSM
 
         private void Configure(CliResult result)
         {
-            if (result.Debug) LogManager.LogLevel = LogEventLevel.Verbose;
+            if (result.Debug) LogManager.RootLogLevel = LogEventLevel.Verbose;
         }
     }
 }

@@ -1,21 +1,11 @@
-﻿using Serilog;
+﻿using MCSM.Api.Manager.IO;
+using Serilog;
 using Serilog.Core;
 using Serilog.Events;
-using Constants = MCSM.Core.Util.Constants;
+using Constants = MCSM.Api.Util.Constants;
 
 namespace MCSM.Core.Manager.IO
 {
-    /// <summary>
-    ///     Manager for logger initialization
-    /// </summary>
-    public interface ILogManager
-    {
-        /// <summary>
-        ///     Current root log event
-        /// </summary>
-        public LogEventLevel LogLevel { get; set; }
-    }
-
     public class LogManager : ILogManager
     {
         private readonly LoggingLevelSwitch _levelSwitch;
@@ -40,7 +30,7 @@ namespace MCSM.Core.Manager.IO
         {
         }
 
-        public LogEventLevel LogLevel
+        public LogEventLevel RootLogLevel
         {
             get => _levelSwitch.MinimumLevel;
             set => _levelSwitch.MinimumLevel = value;

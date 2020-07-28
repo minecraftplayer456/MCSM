@@ -2,41 +2,13 @@
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
-using System.IO;
 using System.Threading;
+using MCSM.Api.Ui;
 using Serilog;
 using RootCommand = MCSM.Ui.Repl.Commands.RootCommand;
 
 namespace MCSM.Ui.Repl
 {
-    /// <summary>
-    ///     Repl for user interface
-    /// </summary>
-    public interface IRepl
-    {
-        /// <summary>
-        ///     When true repl is running
-        /// </summary>
-        bool Running { get; }
-
-        /// <summary>
-        ///     Starts the repl with thread. Repl can only stopped by enter the exit command
-        /// </summary>
-        void Run();
-
-        /// <summary>
-        ///     Stops the repl. This method is called by exit command!
-        /// </summary>
-        void Stop();
-
-        /// <summary>
-        ///     Computes the input from console and executes its command
-        /// </summary>
-        /// <param name="input">input from console</param>
-        /// <returns>parse result</returns>
-        ParseResult ComputeInput(string input);
-    }
-
     public class Repl : IRepl
     {
         private readonly ILogger _log;
@@ -86,10 +58,8 @@ namespace MCSM.Ui.Repl
         {
             _log.Debug("Stopping repl");
             Running = false;
-            if(!_replThread.Join(5000))
-            {
+            if (!_replThread.Join(5000))
                 _log.Warning("Repl thread is still alive. Programme was not exited by repl command!");
-            }
         }
 
         private void Execute()
@@ -100,7 +70,7 @@ namespace MCSM.Ui.Repl
                 Console.Write(">>>");
                 var input = Console.ReadLine();
                 ComputeInput(input);
-                if(input != null) Console.WriteLine();
+                if (input != null) Console.WriteLine();
             }
         }
     }

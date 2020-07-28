@@ -2,6 +2,7 @@
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
+using System.IO;
 using System.Threading;
 using Serilog;
 using RootCommand = MCSM.Ui.Repl.Commands.RootCommand;
@@ -77,7 +78,7 @@ namespace MCSM.Ui.Repl
             if (string.IsNullOrEmpty(input)) return null;
 
             var parseResult = _parser.Parse(input);
-            parseResult.Invoke();
+            parseResult.InvokeAsync();
             return parseResult;
         }
 
@@ -85,9 +86,10 @@ namespace MCSM.Ui.Repl
         {
             _log.Debug("Stopping repl");
             Running = false;
-            _replThread.Join(5000);
-            if (_replThread.IsAlive)
+            if(!_replThread.Join(5000))
+            {
                 _log.Warning("Repl thread is still alive. Programme was not exited by repl command!");
+            }
         }
 
         private void Execute()
@@ -98,6 +100,7 @@ namespace MCSM.Ui.Repl
                 Console.Write(">>>");
                 var input = Console.ReadLine();
                 ComputeInput(input);
+                if(input != null) Console.WriteLine();
             }
         }
     }

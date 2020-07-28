@@ -8,6 +8,9 @@
         public RootCommand()
         {
             AddCommand(new TestCommand());
+            AddCommand(new VersionCommand());
+            AddCommand(new HelpCommand());
+            AddCommand(new ExitCommand());
         }
     }
 }

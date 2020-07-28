@@ -5,11 +5,11 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\MCSM.Core\MCSM.Core.csproj"/>
+        <ProjectReference Include="..\MCSM.Core\MCSM.Core.csproj" />
     </ItemGroup>
 
     <ItemGroup>
-        <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20371.2"/>
+        <PackageReference Include="System.CommandLine" Version="2.0.0-beta1.20371.2" />
     </ItemGroup>
 
 </Project>

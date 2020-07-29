@@ -1,5 +1,6 @@
 ﻿using System.CommandLine;
 using System.CommandLine.Invocation;
+using System.Threading.Tasks;
 using MCSM.Core.Test.Util;
 using Xunit;
 
@@ -12,7 +13,7 @@ namespace MCSM.Ui.Test.Repl
         {
             var repl = new Ui.Repl.Repl(new TestCommand());
 
-            repl.Run();
+            Task.Run(() => repl.Run());
 
             TestUtil.WaitUntil(() => repl.Running);
         }
@@ -22,25 +23,20 @@ namespace MCSM.Ui.Test.Repl
         {
             var repl = new Ui.Repl.Repl(new TestCommand());
 
-            repl.Run();
+            Task.Run(() => repl.Run());
 
             TestUtil.WaitUntil(() => repl.Running);
 
-            repl.Stop();
+            repl.Exit();
 
             TestUtil.WaitUntil(() => !repl.Running);
         }
 
         [Fact]
-        public void When_ValidCommand_Then_Execute()
+        public void When_NoneValidCommand_Then_ReturnNull()
         {
             var repl = new Ui.Repl.Repl(new TestCommand());
-            var result = repl.ComputeInput("test -s string");
-            var command = result.CommandResult.Command as TestCommand;
-
-            Assert.NotNull(command);
-            Assert.True(command.Executed);
-            Assert.Equal("string", command.String);
+            Assert.Null(repl.ComputeInput(""));
         }
 
         public class TestCommand : Command

@@ -13,9 +13,11 @@ namespace MCSM.Ui.Cli
 
             var result = parser.Parse(args).RootCommandResult;
 
-            var debug = result.ValueForOption<bool>("--debug");
-
-            return new CliResult(debug);
+            return new CliResult
+            {
+                Debug = result.ValueForOption<bool>("--debug"),
+              NoRepl = result.ValueForOption<bool>("--no-repl")
+            };
         }
     }
 }

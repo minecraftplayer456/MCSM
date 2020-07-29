@@ -20,7 +20,7 @@ namespace MCSM.Api.Ui
         /// <summary>
         ///     Stops the repl. This method is called by exit command!
         /// </summary>
-        void Stop();
+        void Exit();
 
         /// <summary>
         ///     Computes the input from console and executes its command

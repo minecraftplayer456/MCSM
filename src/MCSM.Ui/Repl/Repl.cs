@@ -2,7 +2,7 @@
 using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
-using System.Threading;
+using MCSM.Api;
 using MCSM.Api.Ui;
 using Serilog;
 using RootCommand = MCSM.Ui.Repl.Commands.RootCommand;
@@ -13,12 +13,10 @@ namespace MCSM.Ui.Repl
     {
         private readonly ILogger _log;
         private readonly Parser _parser;
-        private readonly Thread _replThread;
 
         public Repl(Command command)
         {
             _log = Log.ForContext<Repl>();
-            _replThread = new Thread(Execute);
             _parser = new CommandLineBuilder(command)
                 .UseVersionOption()
                 .UseHelp()
@@ -33,7 +31,7 @@ namespace MCSM.Ui.Repl
                 .Build();
         }
 
-        public Repl() : this(new RootCommand())
+        public Repl(IApplication application) : this(new RootCommand(application))
         {
         }
 
@@ -42,28 +40,6 @@ namespace MCSM.Ui.Repl
         public void Run()
         {
             _log.Debug("Run repl");
-            _replThread.Start();
-        }
-
-        public ParseResult ComputeInput(string input)
-        {
-            if (string.IsNullOrEmpty(input)) return null;
-
-            var parseResult = _parser.Parse(input);
-            parseResult.InvokeAsync();
-            return parseResult;
-        }
-
-        public void Stop()
-        {
-            _log.Debug("Stopping repl");
-            Running = false;
-            if (!_replThread.Join(5000))
-                _log.Warning("Repl thread is still alive. Programme was not exited by repl command!");
-        }
-
-        private void Execute()
-        {
             Running = true;
             while (Running)
             {
@@ -72,6 +48,21 @@ namespace MCSM.Ui.Repl
                 ComputeInput(input);
                 if (input != null) Console.WriteLine();
             }
+        }
+
+        public ParseResult ComputeInput(string input)
+        {
+            if (string.IsNullOrEmpty(input)) return null;
+
+            var parseResult = _parser.Parse(input);
+            parseResult.Invoke();
+            return parseResult;
+        }
+
+        public void Exit()
+        {
+            _log.Debug("Exiting repl");
+            Running = false;
         }
     }
 }

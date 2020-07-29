@@ -2,6 +2,7 @@
 using System.CommandLine;
 using System.CommandLine.Help;
 using System.CommandLine.Invocation;
+using MCSM.Api;
 using MCSM.Api.Util;
 
 namespace MCSM.Ui.Repl.Commands
@@ -34,13 +35,18 @@ namespace MCSM.Ui.Repl.Commands
 
     public class ExitCommand : Command
     {
-        public ExitCommand() : base("exit", "Exits mcsm")
+        private readonly IApplication _application;
+
+        public ExitCommand(IApplication application) : base("exit", "Exits mcsm")
         {
+            _application = application;
+
             Handler = CommandHandler.Create(Execute);
         }
 
         public void Execute()
         {
+            _application.Stop();
         }
     }
 }

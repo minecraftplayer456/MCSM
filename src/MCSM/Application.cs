@@ -19,7 +19,7 @@ namespace MCSM
         {
             LogManager = new LogManager();
             FileManager = new FileManager(new FileSystem());
-            Repl = new Repl();
+            Repl = new Repl(this);
 
             _log = Log.ForContext<Application>();
         }
@@ -34,21 +34,18 @@ namespace MCSM
 
             var cli = new Cli();
 
-            Configure(cli.Parse(args));
+            var cliResult = cli.Parse(args);
+            
+            if (cliResult.Debug) LogManager.RootLogLevel = LogEventLevel.Verbose;
 
-            Repl.Run();
+            if(!cliResult.NoRepl) Repl.Run();
         }
 
         public void Stop()
         {
             _log.Information("Stopping MCSM");
 
-            Repl.Stop();
-        }
-
-        private void Configure(CliResult result)
-        {
-            if (result.Debug) LogManager.RootLogLevel = LogEventLevel.Verbose;
+            Repl.Exit();
         }
     }
 }

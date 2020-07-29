@@ -7,8 +7,8 @@
     </PropertyGroup>
 
     <ItemGroup>
-        <ProjectReference Include="..\..\src\MCSM.Ui\MCSM.Ui.csproj" />
-        <ProjectReference Include="..\MCSM.Core.Test\MCSM.Core.Test.csproj" />
+      <ProjectReference Include="..\..\src\MCSM\MCSM.csproj" />
+      <ProjectReference Include="..\MCSM.Ui.Test\MCSM.Ui.Test.csproj" />
     </ItemGroup>
 
     <ItemGroup>

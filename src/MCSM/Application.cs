@@ -6,6 +6,7 @@ using MCSM.Api.Util;
 using MCSM.Core.Manager.IO;
 using MCSM.Ui.Cli;
 using MCSM.Ui.Repl;
+using MCSM.Ui.Util;
 using Serilog;
 using Serilog.Events;
 
@@ -20,6 +21,7 @@ namespace MCSM
             LogManager = new LogManager();
             FileManager = new FileManager(new FileSystem());
             Repl = new Repl(this);
+            Console = new Console();
 
             _log = Log.ForContext<Application>();
         }
@@ -27,6 +29,8 @@ namespace MCSM
         public ILogManager LogManager { get; }
         public IFileManager FileManager { get; }
         public IRepl Repl { get; }
+        
+        public IConsole Console { get; }
 
         public void Start(string[] args)
         {

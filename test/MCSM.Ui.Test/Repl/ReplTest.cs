@@ -1,6 +1,7 @@
 ﻿using System.CommandLine;
 using System.CommandLine.Invocation;
 using MCSM.Core.Test.Util;
+using MCSM.Ui.Util;
 using Xunit;
 
 namespace MCSM.Ui.Test.Repl
@@ -10,7 +11,9 @@ namespace MCSM.Ui.Test.Repl
         [Fact]
         public void When_NoneValidCommand_Then_ReturnNull()
         {
-            var repl = new Ui.Repl.Repl(new TestCommand());
+            var console = new Console();
+            var repl = new Ui.Repl.Repl(console, new TestCommand());
+            
             Assert.Null(repl.ComputeInput(""));
         }
 

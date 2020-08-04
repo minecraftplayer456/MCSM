@@ -4,7 +4,9 @@ using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
 using MCSM.Api;
 using MCSM.Api.Ui;
+using MCSM.Ui.Util;
 using Serilog;
+using IConsole = MCSM.Api.Ui.IConsole;
 using RootCommand = MCSM.Ui.Repl.Commands.RootCommand;
 
 namespace MCSM.Ui.Repl
@@ -12,11 +14,13 @@ namespace MCSM.Ui.Repl
     public class Repl : IRepl
     {
         private readonly ILogger _log;
+        private readonly IConsole _console;
         private readonly Parser _parser;
 
-        public Repl(Command command)
+        public Repl(IConsole console, Command command)
         {
             _log = Log.ForContext<Repl>();
+            _console = console;
             _parser = new CommandLineBuilder(command)
                 .UseVersionOption()
                 .UseHelp()
@@ -31,7 +35,7 @@ namespace MCSM.Ui.Repl
                 .Build();
         }
 
-        public Repl(IApplication application) : this(new RootCommand(application))
+        public Repl(IApplication application) : this(application.Console, new RootCommand(application))
         {
         }
 
@@ -43,10 +47,10 @@ namespace MCSM.Ui.Repl
             Running = true;
             while (Running)
             {
-                Console.Write(">>>");
-                var input = Console.ReadLine();
+                _console.Write(">>>");
+                var input = _console.ReadLine();
                 ComputeInput(input);
-                if (input != null) Console.WriteLine();
+                if (input != null) _console.WriteLine();
             }
         }
 
@@ -55,7 +59,7 @@ namespace MCSM.Ui.Repl
             if (string.IsNullOrEmpty(input)) return null;
 
             var parseResult = _parser.Parse(input);
-            parseResult.Invoke();
+            parseResult.Invoke(new CommandLineConsole(_console));
             return parseResult;
         }
 

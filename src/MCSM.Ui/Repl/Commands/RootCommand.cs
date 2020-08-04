@@ -1,4 +1,5 @@
 ﻿using MCSM.Api;
+using MCSM.Api.Ui;
 
 namespace MCSM.Ui.Repl.Commands
 {
@@ -7,11 +8,16 @@ namespace MCSM.Ui.Repl.Commands
     /// </summary>
     public class RootCommand : System.CommandLine.RootCommand
     {
-        public RootCommand(IApplication application)
+        public RootCommand(IApplicationLifecycle lifecycle, IConsole console)
         {
-            AddCommand(new VersionCommand());
+            AddCommand(new VersionCommand(console));
             AddCommand(new HelpCommand());
-            AddCommand(new ExitCommand(application));
+            AddCommand(new ExitCommand(lifecycle));
+        }
+
+        public RootCommand(IApplication application) : this(application, application.Console)
+        {
+            
         }
     }
 }

@@ -1,9 +1,10 @@
 ﻿using MCSM.Core.Test.Util;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace MCSM.Ui.Test.Cli
 {
-    public class CliTest : IClassFixture<InitializationClassFixture>
+    public class CliTest : BaseTest
     {
         [Fact]
         public void When_DebugFlag_Then_VerboseLogging()
@@ -19,6 +20,10 @@ namespace MCSM.Ui.Test.Cli
             var cli = new Ui.Cli.Cli();
             var result = cli.Parse(new[] {"--no-repl"});
             Assert.True(result.NoRepl);
+        }
+
+        public CliTest(ITestOutputHelper output) : base(output)
+        {
         }
     }
 }

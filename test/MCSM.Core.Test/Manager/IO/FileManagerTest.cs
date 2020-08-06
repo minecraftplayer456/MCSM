@@ -4,10 +4,11 @@ using System.Linq;
 using MCSM.Core.Manager.IO;
 using MCSM.Core.Test.Util;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace MCSM.Core.Test.Manager.IO
 {
-    public class FileManagerTest : IClassFixture<InitializationClassFixture>
+    public class FileManagerTest : BaseTest
     {
         [Fact]
         public void When_PathsNotExist_Then_Create()
@@ -229,6 +230,10 @@ namespace MCSM.Core.Test.Manager.IO
             fileManager.ComputeAbsolute("/", directory);
 
             Assert.Null(fileManager.FileReader(directory));
+        }
+
+        public FileManagerTest(ITestOutputHelper output) : base(output)
+        {
         }
     }
 }

@@ -5,6 +5,8 @@ using System.CommandLine.Invocation;
 using MCSM.Api;
 using MCSM.Api.Util;
 using MCSM.Ui.Util;
+using Serilog;
+using Console = System.Console;
 using IConsole = MCSM.Api.Ui.IConsole;
 
 namespace MCSM.Ui.Repl.Commands

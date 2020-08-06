@@ -3,10 +3,11 @@ using System.CommandLine.Invocation;
 using MCSM.Core.Test.Util;
 using MCSM.Ui.Util;
 using Xunit;
+using Xunit.Abstractions;
 
 namespace MCSM.Ui.Test.Repl
 {
-    public class ReplTest : IClassFixture<InitializationClassFixture>
+    public class ReplTest : BaseTest
     {
         [Fact]
         public void When_NoneValidCommand_Then_ReturnNull()
@@ -34,6 +35,10 @@ namespace MCSM.Ui.Test.Repl
                 String = s;
                 Executed = true;
             }
+        }
+
+        public ReplTest(ITestOutputHelper output) : base(output)
+        {
         }
     }
 }

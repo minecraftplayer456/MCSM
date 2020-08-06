@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.CommandLine.IO;
 using System.IO;
 using System.Text;
@@ -29,50 +30,56 @@ namespace MCSM.Ui.Test.Util
         public void Write(string s = "")
         {
             Out.Write(s);
-            Console.Write(s);
         }
 
         public void WriteLine(string s = "")
         {
             Out.WriteLine(s);
-            Console.WriteLine(s);
         }
     }
 
     public class TestTextWriter : TextWriter
     {
-        private readonly StringBuilder _builder;
-        
+        private readonly List<string> _content;
+
         public TestTextWriter()
         {
-            _builder = new StringBuilder();
+            _content = new List<string>();
         }
-        
+
         public override Encoding Encoding => Encoding.Default;
 
-        public override void Write(char value)
-        {
-            _builder.Append(value);
-        }
+        public string[] Content => _content.ToArray(); 
 
-        public override string ToString()
+        public override void WriteLine(string value)
         {
-            return _builder.ToString();
+            _content.Add(value);
+            Console.WriteLine(value);
+        }
+        
+        public override void Write(string value)
+        {
+            if (string.IsNullOrWhiteSpace(value)) return;
+            _content.Add(value);
+            Console.Write(value);
         }
     }
 
     public class TestTextReader : TextReader
     {
-        private readonly Func<string> _readFunc;
+        private readonly string[] _content;
+        private int _count;
 
-        public TestTextReader(Func<string> readFunc = null)
+        public TestTextReader(string[] content)
         {
-            _readFunc = readFunc;
+            _content = content;
         }
+
+        public TestTextReader() : this(new string[] { }) { }
 
         public override string ReadLine()
         {
-            return _readFunc?.Invoke();
+            return _content.Length < _count ? null : _content[_count++];
         }
     }
 }

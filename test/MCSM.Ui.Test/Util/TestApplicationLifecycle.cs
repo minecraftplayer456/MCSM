@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using MCSM.Api;
+﻿using MCSM.Api;
 
 namespace MCSM.Ui.Test.Util
 {
@@ -28,10 +27,10 @@ namespace MCSM.Ui.Test.Util
             _stopDel = stopDel;
         }
 
-        public Task Start(string[] args)
+        public void Start(string[] args)
         {
             //Execute start delegate in task
-            return new Task(() => _startDel?.Invoke(args));
+            _startDel?.Invoke(args);
         }
 
         public void Stop()

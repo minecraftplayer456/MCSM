@@ -1,5 +1,4 @@
-﻿using System.Threading.Tasks;
-using MCSM.Api.Manager.IO;
+﻿using MCSM.Api.Manager.IO;
 using MCSM.Api.Ui;
 
 namespace MCSM.Api
@@ -12,9 +11,8 @@ namespace MCSM.Api
         /// <summary>
         ///     Starts the application and loads workspace
         ///     <param name="args">Programme arguments to parse with cli</param>
-        ///     <returns>Task for asynchronous execution</returns>
         /// </summary>
-        Task Start(string[] args);
+        void Start(string[] args);
 
         /// <summary>
         ///     Stops the application and saves workspace

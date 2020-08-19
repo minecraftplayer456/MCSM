@@ -1,5 +1,4 @@
 ﻿using System.IO.Abstractions;
-using System.Threading.Tasks;
 using MCSM.Api;
 using MCSM.Api.Manager.IO;
 using MCSM.Api.Ui;
@@ -20,14 +19,21 @@ namespace MCSM
         /// <summary>
         ///     Creates new application instance that can run isolated from other application instances
         /// </summary>
-        public Application()
+        public Application(IConsole console)
         {
-            //Initializes programme components and inject them each other
+            //Set application components
+            Console = console;
+
+            //Create new application components
             LogManager = new LogManager();
             FileManager = new FileManager(new FileSystem());
-            Console = new Console();
             Repl = new Repl(this);
+
             _log = Log.ForContext<Application>();
+        }
+
+        public Application() : this(new Console())
+        {
         }
 
         public ILogManager LogManager { get; }
@@ -35,7 +41,7 @@ namespace MCSM
         public IRepl Repl { get; }
         public IConsole Console { get; }
 
-        public async Task Start(string[] args)
+        public void Start(string[] args)
         {
             _log.Information("Starting MCSM - v.{version}", Constants.McsmVersion);
 
@@ -47,7 +53,7 @@ namespace MCSM
             if (cliResult.Debug) LogManager.RootLogLevel = LogEventLevel.Verbose;
 
             //Run the repl after initialization
-            if (!cliResult.NoRepl) await Repl.Run();
+            if (!cliResult.NoRepl) Repl.Run();
         }
 
         public void Stop()

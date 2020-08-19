@@ -9,7 +9,7 @@
         {
             //Creates new application instance, run it and wait for completion
             var application = new Application();
-            application.Start(args).Wait();
+            application.Start(args);
         }
     }
 }

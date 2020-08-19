@@ -1,4 +1,5 @@
 ﻿using MCSM.Core.Test.Util;
+using MCSM.Ui.Test.Util;
 using Xunit;
 using Xunit.Abstractions;
 
@@ -19,11 +20,12 @@ namespace MCSM.Test
         [Fact]
         public void TestApplicationLifecycle()
         {
-            //TODO Make new
-            var application = new Application();
+            //Set up application with mock console
+            var reader = new TestTextReader(new[] {"exit"});
+            var console = new TestConsole(new TestTextWriter(), reader);
+            var application = new Application(console);
 
-            application.Start(new[] {"--debug", "--no-repl"});
-            application.Stop();
+            application.Start(new string[] { });
         }
     }
 }

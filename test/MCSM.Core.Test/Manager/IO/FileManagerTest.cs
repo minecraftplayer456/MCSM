@@ -26,9 +26,9 @@ namespace MCSM.Core.Test.Manager.IO
             var fileManager = new FileManager(fileSystem);
 
             // Creates one path for a directory and one for a file
-            var path = fileManager.Path();
-            fileManager.Path("directory", path);
-            fileManager.Path("file.txt", path, false);
+            var path = new Path();
+            new Path("directory", path);
+            new Path("file.txt", path, false);
 
             // Initializes and create bothp
             fileManager.InitPath("/", path);
@@ -50,9 +50,9 @@ namespace MCSM.Core.Test.Manager.IO
             var fileManager = new FileManager(fileSystem);
 
             // Creates path for directory and file with recursiveInit false
-            var path = fileManager.Path();
-            fileManager.Path("directory", path, recursiveInit: false);
-            fileManager.Path("file.txt", path, false, false);
+            var path = new Path();
+            new Path("directory", path, recursiveInit: false);
+            new Path("file.txt", path, false, false);
 
             // Initializes parent
             fileManager.InitPath("/", path);
@@ -75,7 +75,7 @@ namespace MCSM.Core.Test.Manager.IO
             var fileManager = new FileManager(fileSystem);
 
             // Creates a path
-            var path = fileManager.Path();
+            var path = new Path();
 
             // Compute absolute path for path
             fileManager.ComputeAbsolute("/", path);
@@ -100,8 +100,8 @@ namespace MCSM.Core.Test.Manager.IO
             fileSystem.File.Create("/file.txt").Close();
 
             //Create path for directory and file
-            var directory = fileManager.Path("/directory");
-            var file = fileManager.Path("file.txt", isDirectory: false);
+            var directory = new Path("/directory");
+            var file = new Path("file.txt", isDirectory: false);
 
             //Initialize path and directory
             fileManager.InitPath("/", directory);
@@ -131,8 +131,8 @@ namespace MCSM.Core.Test.Manager.IO
             fileSystem.File.Create("/directory/file.txt").Close();
 
             //Create path for directory
-            var directory = fileManager.Path("directory");
-            var file = fileManager.Path("file.txt", directory);
+            var directory = new Path("directory");
+            var file = new Path("file.txt", directory);
 
             //Initialize directory
             fileManager.InitPath("/", directory);
@@ -158,7 +158,7 @@ namespace MCSM.Core.Test.Manager.IO
             fileSystem.File.Create("/file.txt").Close();
 
             //Create path for file
-            var file = fileManager.Path("file.txt", isDirectory: false);
+            var file = new Path("file.txt", isDirectory: false);
 
             //Initialize file
             fileManager.InitPath("/", file);
@@ -184,7 +184,7 @@ namespace MCSM.Core.Test.Manager.IO
             fileSystem.File.Create("/file.txt").Close();
 
             //Create path for file
-            var file = fileManager.Path("file.txt", isDirectory: false);
+            var file = new Path("file.txt", isDirectory: false);
 
             //Initialize file
             fileManager.InitPath("/", file);
@@ -230,7 +230,7 @@ namespace MCSM.Core.Test.Manager.IO
             fileSystem.Directory.CreateDirectory("/directory");
 
             //directory path for file
-            var directory = fileManager.Path("directory");
+            var directory = new Path("directory");
 
             //Initialize file
             fileManager.InitPath("/", directory);

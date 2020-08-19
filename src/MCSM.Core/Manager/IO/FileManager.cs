@@ -21,7 +21,7 @@ namespace MCSM.Core.Manager.IO
 
         #region Path
 
-        public IPath Path(string relativePath = "", IPath parent = null, bool isDirectory = true,
+        /*public IPath Path(string relativePath = "", IPath parent = null, bool isDirectory = true,
             bool recursiveInit = true)
         {
             //Creates new path
@@ -31,7 +31,7 @@ namespace MCSM.Core.Manager.IO
             parent?.Children.Add(path);
 
             return path;
-        }
+        }*/
 
         public IPath ComputeAbsolute(string rootPath, IPath path)
         {
@@ -174,13 +174,26 @@ namespace MCSM.Core.Manager.IO
 
     public class Path : IPath
     {
-        internal Path(string relativePath, IPath parent, bool isDirectory, bool recursiveInit)
+        /// <summary>
+        ///     Creates a new path. It will not be initialized
+        /// </summary>
+        /// <param name="relativePath">relative path of path. This will be used with a root path to compute an absolute path</param>
+        /// <param name="parent">the parent path that will be added to the front</param>
+        /// <param name="isDirectory">
+        ///     if true the path will be a directory and create one. Otherwise it would be a file and create
+        ///     one
+        /// </param>
+        /// <param name="recursiveInit">if true the path will be initialized by its parent</param>
+        public Path(string relativePath = "", IPath parent = null, bool isDirectory = true, bool recursiveInit = true)
         {
             RelativePath = relativePath;
             Parent = parent;
             IsDirectory = isDirectory;
             RecursiveInit = recursiveInit;
+
+            //Add to parent
             Children = new List<IPath>();
+            parent?.Children.Add(this);
         }
 
         public List<IPath> Children { get; }

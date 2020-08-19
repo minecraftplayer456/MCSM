@@ -9,20 +9,6 @@ namespace MCSM.Api.Manager.IO
     public interface IFileManager
     {
         /// <summary>
-        ///     Creates a new path. It will not be initialized
-        /// </summary>
-        /// <param name="relativePath">relative path of path. This will be used with a root path to compute an absolute path</param>
-        /// <param name="parent">the parent path that will be added to the front</param>
-        /// <param name="isDirectory">
-        ///     if true the path will be a directory and create one. Otherwise it would be a file and create
-        ///     one
-        /// </param>
-        /// <param name="recursiveInit">if true the path will be initialized by its parent</param>
-        /// <returns>new path instance</returns>
-        public IPath Path(string relativePath = "", IPath parent = null, bool isDirectory = true,
-            bool recursiveInit = true);
-
-        /// <summary>
         ///     Computes the absolute path of a path from rootPath and relativePath
         /// </summary>
         /// <param name="rootPath">path that will be added to the front</param>

@@ -60,8 +60,11 @@ namespace MCSM.Core.Test.Util
             _builder ??= new StringBuilder();
             if (value.Contains("\n") || value.Contains("\r"))
             {
+                value = value.Replace("\n", "");
+                value = value.Replace("\r", "");
                 _builder.Append(value);
                 _output.WriteLine(_builder.ToString());
+                _builder.Clear();
             }
             else
             {
@@ -71,8 +74,8 @@ namespace MCSM.Core.Test.Util
 
         public override void Write(char value)
         {
-            // Print warning if a char is try to be printed
-            _output.WriteLine($"Writing char to test output: {value}", value);
+            // Redirect to Write for string
+            Write(value.ToString());
         }
     }
 }

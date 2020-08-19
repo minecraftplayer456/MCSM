@@ -1,6 +1,4 @@
-﻿using System.IO;
-using System.IO.Abstractions.TestingHelpers;
-using System.Linq;
+﻿using System.IO.Abstractions.TestingHelpers;
 using MCSM.Core.Manager.IO;
 using MCSM.Core.Test.Util;
 using Xunit;
@@ -88,175 +86,162 @@ namespace MCSM.Core.Test.Manager.IO
         }
 
         /// <summary>
-        ///     If a path exists and Delete is called the path will be deleted
+        ///     If path exist then it will be deleted
         /// </summary>
         [Fact]
         public void When_PathExists_Then_Delete()
         {
-            // Set up file manager and mock file system
+            //Set up fileManager with mock file system
             var fileSystem = new MockFileSystem();
             var fileManager = new FileManager(fileSystem);
 
-            // Creates a directory and a file
+            //Create directory and file
             fileSystem.Directory.CreateDirectory("/directory");
             fileSystem.File.Create("/file.txt").Close();
 
-            // Creates both of them as path
-            var directory = fileManager.Path("directory");
-            var file = fileManager.Path("file.txt");
+            //Create path for directory and file
+            var directory = fileManager.Path("/directory");
+            var file = fileManager.Path("file.txt", isDirectory: false);
 
-            // Computes absolute path
-            fileManager.ComputeAbsolute("/", directory);
-            fileManager.ComputeAbsolute("/", file);
+            //Initialize path and directory
+            fileManager.InitPath("/", directory);
+            fileManager.InitPath("/", file);
 
-            // Delete directory and file
+            //Delete directory and file
             fileManager.Delete(directory);
             fileManager.Delete(file);
 
-            // Assert that they are all deleted
+            // Assert that directory and file is deleted
             Assert.False(fileSystem.Directory.Exists("/directory"));
             Assert.False(fileSystem.File.Exists("/file.txt"));
         }
 
-        //TODO Integrate in delete path tests
+        /// <summary>
+        ///     If valid directory exists then you could get the children files from it.
+        /// </summary>
         [Fact]
-        public void When_PathExists_Then_True()
+        public void When_ValidDirectory_Then_GetFiles()
         {
+            //Set up fileManager with mock file system
             var fileSystem = new MockFileSystem();
             var fileManager = new FileManager(fileSystem);
 
-            fileSystem.Directory.CreateDirectory("/directory");
-            fileSystem.File.Create("/file.txt").Close();
-
-            var directory = fileManager.Path("directory");
-            var file = fileManager.Path("file.txt", isDirectory: false);
-
-            fileManager.ComputeAbsolute("/", directory);
-            fileManager.ComputeAbsolute("/", file);
-
-            Assert.True(fileManager.Exists(directory));
-            Assert.True(fileManager.Exists(file));
-        }
-
-        //TODO Integrate in delete path tests
-        [Fact]
-        public void When_PathNotExist_Then_False()
-        {
-            var fileSystem = new MockFileSystem();
-            var fileManager = new FileManager(fileSystem);
-
-            var directory = fileManager.Path("directory");
-            var file = fileManager.Path("file.txt", isDirectory: false);
-
-            fileManager.ComputeAbsolute("/", directory);
-            fileManager.ComputeAbsolute("/", file);
-
-            Assert.False(fileManager.Exists(directory));
-            Assert.False(fileManager.Exists(file));
-        }
-
-        [Fact]
-        public void When_DirectoryExists_Then_GetFiles()
-        {
-            var fileSystem = new MockFileSystem();
-            var fileManager = new FileManager(fileSystem);
-
+            //Create directory and child file
             fileSystem.Directory.CreateDirectory("/directory");
             fileSystem.File.Create("/directory/file.txt").Close();
 
+            //Create path for directory
             var directory = fileManager.Path("directory");
-            fileManager.Path("file.txt", directory, false);
+            var file = fileManager.Path("file.txt", directory);
 
+            //Initialize directory
             fileManager.InitPath("/", directory);
 
-            Assert.EndsWith("file.txt", fileManager.GetFiles(directory).Last());
+            //Get files from directory
+            var files = fileManager.GetFiles(directory);
+
+            //Assert that file is included in directory
+            Assert.Contains(file.AbsolutePath, files);
         }
 
+        /// <summary>
+        ///     If valid file exists then not get children files
+        /// </summary>
         [Fact]
-        public void When_DirectoryNotExist_Then_GetNotFiles()
+        public void When_File_Then_NotGetFiles()
         {
+            //Set up fileManager with mock file system
             var fileSystem = new MockFileSystem();
             var fileManager = new FileManager(fileSystem);
 
+            //Create file
             fileSystem.File.Create("/file.txt").Close();
 
-            var file = fileManager.Path("file.txt", isDirectory: false);
+            //Create path for file
+            var file = fileManager.Path("file.txt");
 
-            fileManager.ComputeAbsolute("/", file);
+            //Initialize file
+            fileManager.InitPath("/", file);
 
-            Assert.Empty(fileManager.GetFiles(file));
+            //Get files from file
+            var files = fileManager.GetFiles(file);
+
+            //Assert that files are empty
+            Assert.Null(files);
         }
 
+        /// <summary>
+        ///     If valid file is present you can create a text reader/writer
+        /// </summary>
         [Fact]
-        public void When_FileExists_Then_CreateWriter()
+        public void When_ValidFile_Then_CreateReaderWriter()
         {
+            //Set up fileManager with mock file system
             var fileSystem = new MockFileSystem();
             var fileManager = new FileManager(fileSystem);
 
+            //Create file on filesystem
             fileSystem.File.Create("/file.txt").Close();
 
+            //Create path for file
             var file = fileManager.Path("file.txt", isDirectory: false);
 
-            fileManager.ComputeAbsolute("/", file);
+            //Initialize file
+            fileManager.InitPath("/", file);
 
+            //Create writer
             var writer = fileManager.FileWriter(file);
-            writer.Write("Hello World!");
+
+            //Assert writer is not null
+            Assert.NotNull(writer);
+
+            //Write to file
+            writer.WriteLine("Hello");
             writer.Close();
 
-            var reader = new StreamReader(fileSystem.File.OpenRead("/file.txt"));
-            Assert.Equal("Hello World!", reader.ReadLine());
-            reader.Close();
-        }
+            //Assert content was written
+            Assert.Contains("Hello", fileSystem.GetFile("/file.txt").TextContents);
 
-        [Fact]
-        public void When_FileIsDirectory_Then_NotReturnWriter()
-        {
-            var fileSystem = new MockFileSystem();
-            var fileManager = new FileManager(fileSystem);
-
-            fileSystem.Directory.CreateDirectory("/directory");
-
-            var directory = fileManager.Path("directory");
-
-            fileManager.ComputeAbsolute("/", directory);
-
-            Assert.Null(fileManager.FileWriter(directory));
-        }
-
-        [Fact]
-        public void When_FileExists_Then_CreateReader()
-        {
-            var fileSystem = new MockFileSystem();
-            var fileManager = new FileManager(fileSystem);
-
-            fileSystem.File.Create("/file.txt").Close();
-
-            var file = fileManager.Path("file.txt", isDirectory: false);
-
-            fileManager.ComputeAbsolute("/", file);
-
-            var writer = new StreamWriter(fileSystem.File.OpenWrite("/file.txt"));
-            writer.Write("Hello World!");
-            writer.Close();
-
+            //Create reader
             var reader = fileManager.FileReader(file);
-            Assert.Equal("Hello World!", reader.ReadLine());
+
+            //Assert reader is not null
+            Assert.NotNull(reader);
+
+            //Read from file
+            var read = reader.ReadLine();
             reader.Close();
+
+            //Assert read content
+            Assert.Equal("Hello", read);
         }
 
+        /// <summary>
+        ///     If valid directory is present then no reader/writer will be created
+        /// </summary>
         [Fact]
-        public void When_FileIsDirectory_Then_NotReturnReader()
+        public void When_Directory_Then_NotCreateReaderWriter()
         {
+            //Set up fileManager with mock file system
             var fileSystem = new MockFileSystem();
             var fileManager = new FileManager(fileSystem);
 
+            //Create file on filesystem
             fileSystem.Directory.CreateDirectory("/directory");
 
+            //directory path for file
             var directory = fileManager.Path("directory");
 
-            fileManager.ComputeAbsolute("/", directory);
+            //Initialize file
+            fileManager.InitPath("/", directory);
 
-            Assert.Null(fileManager.FileReader(directory));
+            //Create writer
+            var writer = fileManager.FileWriter(directory);
+            var reader = fileManager.FileReader(directory);
+
+            //Assert writer/reader is null
+            Assert.Null(writer);
+            Assert.Null(reader);
         }
     }
 }

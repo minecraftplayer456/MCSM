@@ -53,6 +53,13 @@ namespace MCSM.Api.Manager.IO
         public bool Exists(IPath path);
 
         /// <summary>
+        ///     Tests if path exists and if path is initialized (has absolutePath)
+        /// </summary>
+        /// <param name="path">path to be validated</param>
+        /// <returns>true if path is valid</returns>
+        public bool Validate(IPath path);
+
+        /// <summary>
         ///     Get all entries of a directory. Path must be a directory
         /// </summary>
         /// <param name="path">path to a directory with entries</param>

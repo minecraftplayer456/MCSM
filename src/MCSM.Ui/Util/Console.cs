@@ -29,11 +29,11 @@ namespace MCSM.Ui.Util
             System.Console.WriteLine(s);
         }
     }
-    
+
     public class CommandLineConsole : System.CommandLine.IConsole
     {
         private readonly IConsole _console;
-        
+
         public CommandLineConsole(IConsole console)
         {
             _console = console;

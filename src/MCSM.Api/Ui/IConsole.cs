@@ -1,5 +1,4 @@
-﻿using System.CommandLine.IO;
-using System.IO;
+﻿using System.IO;
 
 namespace MCSM.Api.Ui
 {
@@ -12,7 +11,7 @@ namespace MCSM.Api.Ui
         public TextReader In { get; }
 
         public bool IsOutRedirected { get; }
-        
+
         public bool IsErrorRedirected { get; }
 
         public bool IsInRedirected { get; }
@@ -20,7 +19,7 @@ namespace MCSM.Api.Ui
         public string ReadLine();
 
         public void Write(string s = "");
-        
+
         public void WriteLine(string s = "");
     }
 }

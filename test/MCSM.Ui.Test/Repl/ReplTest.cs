@@ -1,5 +1,4 @@
 ﻿using System.CommandLine;
-using System.CommandLine.Invocation;
 using MCSM.Core.Test.Util;
 using MCSM.Ui.Util;
 using Xunit;
@@ -9,36 +8,24 @@ namespace MCSM.Ui.Test.Repl
 {
     public class ReplTest : BaseTest
     {
+        public ReplTest(ITestOutputHelper output) : base(output)
+        {
+        }
+
         [Fact]
         public void When_NoneValidCommand_Then_ReturnNull()
         {
             var console = new Console();
-            var repl = new Ui.Repl.Repl(console, new TestCommand());
-            
-            Assert.Null(repl.ComputeInput(""));
+            var repl = new Ui.Repl.Repl(console, new DummyCommand());
+
+            Assert.Null(repl.ComputeInput("").Result);
         }
 
-        public class TestCommand : Command
+        public class DummyCommand : Command
         {
-            public TestCommand() : base("test", "test command")
+            public DummyCommand() : base("dummy", "dummy command")
             {
-                Add(new Option<string>("-s"));
-
-                Handler = CommandHandler.Create<string>(Execute);
             }
-
-            public bool Executed { get; private set; }
-            public string String { get; private set; }
-
-            public void Execute(string s)
-            {
-                String = s;
-                Executed = true;
-            }
-        }
-
-        public ReplTest(ITestOutputHelper output) : base(output)
-        {
         }
     }
 }

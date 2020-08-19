@@ -16,7 +16,7 @@ namespace MCSM.Ui.Cli
             return new CliResult
             {
                 Debug = result.ValueForOption<bool>("--debug"),
-              NoRepl = result.ValueForOption<bool>("--no-repl")
+                NoRepl = result.ValueForOption<bool>("--no-repl")
             };
         }
     }

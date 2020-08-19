@@ -6,6 +6,10 @@ namespace MCSM.Ui.Test.Cli
 {
     public class CliTest : BaseTest
     {
+        public CliTest(ITestOutputHelper output) : base(output)
+        {
+        }
+
         [Fact]
         public void When_DebugFlag_Then_VerboseLogging()
         {
@@ -20,10 +24,6 @@ namespace MCSM.Ui.Test.Cli
             var cli = new Ui.Cli.Cli();
             var result = cli.Parse(new[] {"--no-repl"});
             Assert.True(result.NoRepl);
-        }
-
-        public CliTest(ITestOutputHelper output) : base(output)
-        {
         }
     }
 }

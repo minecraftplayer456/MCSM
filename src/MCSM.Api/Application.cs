@@ -1,23 +1,23 @@
-﻿using MCSM.Api.Manager.IO;
+﻿using System.Threading.Tasks;
+using MCSM.Api.Manager.IO;
 using MCSM.Api.Ui;
 
 namespace MCSM.Api
 {
     public interface IApplicationLifecycle
     {
-        
         /// <summary>
         ///     Starts the application and loads workspace
         ///     <param name="args">Programme arguments to parse with cli</param>
         /// </summary>
-        void Start(string[] args);
+        Task Start(string[] args);
 
         /// <summary>
         ///     Stops the application and saves workspace
         /// </summary>
         void Stop();
     }
-    
+
     /// <summary>
     ///     Main application class for starting and stopping. This class holds all managers
     /// </summary>
@@ -37,7 +37,7 @@ namespace MCSM.Api
         ///     Returns current IRepl
         /// </summary>
         IRepl Repl { get; }
-        
+
         IConsole Console { get; }
     }
 }

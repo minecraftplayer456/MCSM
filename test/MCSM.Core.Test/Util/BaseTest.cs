@@ -11,7 +11,7 @@ namespace MCSM.Core.Test.Util
     public abstract class BaseTest
     {
         public static bool Initialized;
-        
+
         public BaseTest(ITestOutputHelper output)
         {
             if (!Initialized)
@@ -19,7 +19,7 @@ namespace MCSM.Core.Test.Util
                 new LogManager(LogEventLevel.Verbose);
                 Initialized = true;
             }
-            
+
             var writer = new TestOutputWriter(output);
             Console.SetOut(writer);
             Console.SetError(writer);
@@ -37,7 +37,7 @@ namespace MCSM.Core.Test.Util
             _log = Log.ForContext<TestOutputWriter>();
             _output = output;
         }
-        
+
         public override Encoding Encoding => Encoding.Default;
 
         public override void WriteLine(string value)
@@ -63,10 +63,10 @@ namespace MCSM.Core.Test.Util
                 _builder.Append(value);
             }
         }
-        
+
         public override void Write(char value)
         {
-            _log.Warning("Writing char to test output: {value}", value);
+            _output.WriteLine($"Writing char to test output: {value}", value);
         }
     }
 }

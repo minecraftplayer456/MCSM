@@ -19,9 +19,9 @@
         ///     When true root log level will be verbose
         /// </summary>
         public bool Debug { get; set; }
-        
+
         /// <summary>
-        /// When true no repl will be started
+        ///     When true no repl will be started
         /// </summary>
         public bool NoRepl { get; set; }
     }

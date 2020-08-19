@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Threading.Tasks;
 using MCSM.Api;
 
 namespace MCSM.Ui.Test.Util
@@ -6,6 +6,7 @@ namespace MCSM.Ui.Test.Util
     public class TestApplicationLifecycle : IApplicationLifecycle
     {
         public delegate void StartDel(string[] args);
+
         public delegate void StopDel();
 
         private readonly StartDel _startDel;
@@ -16,10 +17,10 @@ namespace MCSM.Ui.Test.Util
             _startDel = startDel;
             _stopDel = stopDel;
         }
-        
-        public void Start(string[] args)
+
+        public Task Start(string[] args)
         {
-            _startDel?.Invoke(args);
+            return new Task(() => _startDel?.Invoke(args));
         }
 
         public void Stop()

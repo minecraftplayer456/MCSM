@@ -17,7 +17,6 @@ namespace MCSM.Ui.Repl.Commands
 
         public RootCommand(IApplication application) : this(application, application.Console)
         {
-            
         }
     }
 }

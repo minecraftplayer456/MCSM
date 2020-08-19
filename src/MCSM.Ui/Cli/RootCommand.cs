@@ -10,7 +10,7 @@ namespace MCSM.Ui.Cli
         public RootCommand()
         {
             Add(new Option<bool>(new[] {"--debug", "-d"}));
-            Add(new Option<bool>(new []{"--no-repl", "-nr"}));
+            Add(new Option<bool>(new[] {"--no-repl", "-nr"}));
         }
     }
 }

@@ -1,7 +1,7 @@
-﻿using System;
-using System.CommandLine;
+﻿using System.CommandLine;
 using System.CommandLine.Builder;
 using System.CommandLine.Parsing;
+using System.Threading.Tasks;
 using MCSM.Api;
 using MCSM.Api.Ui;
 using MCSM.Ui.Util;
@@ -13,8 +13,8 @@ namespace MCSM.Ui.Repl
 {
     public class Repl : IRepl
     {
-        private readonly ILogger _log;
         private readonly IConsole _console;
+        private readonly ILogger _log;
         private readonly Parser _parser;
 
         public Repl(IConsole console, Command command)
@@ -41,7 +41,7 @@ namespace MCSM.Ui.Repl
 
         public bool Running { get; private set; }
 
-        public void Run()
+        public async Task Run()
         {
             _log.Debug("Run repl");
             Running = true;
@@ -49,17 +49,17 @@ namespace MCSM.Ui.Repl
             {
                 _console.Write(">>>");
                 var input = _console.ReadLine();
-                ComputeInput(input);
+                await ComputeInput(input);
                 if (input != null) _console.WriteLine();
             }
         }
 
-        public ParseResult ComputeInput(string input)
+        public async Task<ParseResult> ComputeInput(string input)
         {
             if (string.IsNullOrEmpty(input)) return null;
 
             var parseResult = _parser.Parse(input);
-            parseResult.Invoke(new CommandLineConsole(_console));
+            await parseResult.InvokeAsync(new CommandLineConsole(_console));
             return parseResult;
         }
 

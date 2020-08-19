@@ -1,12 +1,8 @@
-﻿using System;
-using System.CommandLine;
+﻿using System.CommandLine;
 using System.CommandLine.Help;
 using System.CommandLine.Invocation;
 using MCSM.Api;
 using MCSM.Api.Util;
-using MCSM.Ui.Util;
-using Serilog;
-using Console = System.Console;
 using IConsole = MCSM.Api.Ui.IConsole;
 
 namespace MCSM.Ui.Repl.Commands
@@ -14,11 +10,11 @@ namespace MCSM.Ui.Repl.Commands
     public class VersionCommand : Command
     {
         private readonly IConsole _console;
-        
+
         public VersionCommand(IConsole console) : base("version", "Displays current version of MCSM")
         {
             _console = console;
-            
+
             Handler = CommandHandler.Create(Execute);
         }
 

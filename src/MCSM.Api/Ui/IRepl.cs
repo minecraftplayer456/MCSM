@@ -1,4 +1,5 @@
 ﻿using System.CommandLine.Parsing;
+using System.Threading.Tasks;
 
 namespace MCSM.Api.Ui
 {
@@ -15,7 +16,7 @@ namespace MCSM.Api.Ui
         /// <summary>
         ///     Starts the repl with thread. Repl can only stopped by enter the exit command
         /// </summary>
-        void Run();
+        Task Run();
 
         /// <summary>
         ///     Stops the repl. This method is called by exit command!
@@ -27,6 +28,6 @@ namespace MCSM.Api.Ui
         /// </summary>
         /// <param name="input">input from console</param>
         /// <returns>parse result</returns>
-        ParseResult ComputeInput(string input);
+        Task<ParseResult> ComputeInput(string input);
     }
 }

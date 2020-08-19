@@ -10,6 +10,10 @@ namespace MCSM.Core.Test.Manager.IO
 {
     public class FileManagerTest : BaseTest
     {
+        public FileManagerTest(ITestOutputHelper output) : base(output)
+        {
+        }
+
         [Fact]
         public void When_PathsNotExist_Then_Create()
         {
@@ -230,10 +234,6 @@ namespace MCSM.Core.Test.Manager.IO
             fileManager.ComputeAbsolute("/", directory);
 
             Assert.Null(fileManager.FileReader(directory));
-        }
-
-        public FileManagerTest(ITestOutputHelper output) : base(output)
-        {
         }
     }
 }

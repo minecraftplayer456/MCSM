@@ -119,22 +119,18 @@ namespace MCSM.Core.Manager.IO
 
         public bool Validate(IPath path)
         {
-            // Test if path hasn't absolute path then it's not valid
-            if (path.AbsolutePath != null)
+            // Test if absolute path is null then path is not valid
+            if (path.AbsolutePath == null)
             {
-                // Test if path not exist then it's not valid
-                if (Exists(path))
-                {
-                    _log.Verbose("Path {absolutePath} is valid", path.AbsolutePath);
-                    return true;
-                }
-
-                _log.Warning("Path {absolutePath} does not exist", path.AbsolutePath);
+                _log.Warning("Path {relativePath} is not valid: No absolute path was initialized", path.RelativePath);
                 return false;
             }
 
-            _log.Warning("Path {relativePath} is not valid: No absolute path was initialized", path.RelativePath);
-            return false;
+            //Test if path exists if not path is not valid
+            if (!Exists(path)) return false;
+
+            _log.Verbose("Path {absolutePath} is valid", path.AbsolutePath);
+            return true;
         }
 
         public bool Exists(IPath path)

@@ -22,7 +22,6 @@ namespace MCSM.Ui.Repl
             _log = Log.ForContext<Repl>();
             _console = console;
             _parser = new CommandLineBuilder(command)
-                .UseVersionOption()
                 .UseHelp()
                 .UseEnvironmentVariableDirective()
                 .UseParseDirective()

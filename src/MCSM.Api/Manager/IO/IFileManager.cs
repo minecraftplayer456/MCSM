@@ -75,6 +75,12 @@ namespace MCSM.Api.Manager.IO
         public StreamReader FileReader(IPath path);
     }
 
+    /// <summary>
+    ///     This interface contains information about a path on the filesystem.
+    ///     It contains absolut path, relative path, children, parent and if the path is a directory or a file.
+    ///     When a path is called with initPath in IFileManager the directory or file will be created and children with
+    ///     parameter RecursiveInit will be initialized too.
+    /// </summary>
     public interface IPath
     {
         /// <summary>

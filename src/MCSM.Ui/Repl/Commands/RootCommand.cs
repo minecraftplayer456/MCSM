@@ -10,6 +10,7 @@ namespace MCSM.Ui.Repl.Commands
     {
         public RootCommand(IApplicationLifecycle lifecycle, IConsole console)
         {
+            //Add subcommands to root command
             AddCommand(new VersionCommand(console));
             AddCommand(new HelpCommand());
             AddCommand(new ExitCommand(lifecycle));

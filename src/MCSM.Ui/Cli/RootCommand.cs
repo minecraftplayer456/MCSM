@@ -9,6 +9,7 @@ namespace MCSM.Ui.Cli
     {
         public RootCommand()
         {
+            //Add options to root command
             Add(new Option<bool>(new[] {"--debug", "-d"}));
             Add(new Option<bool>(new[] {"--no-repl", "-nr"}));
         }

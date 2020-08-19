@@ -4,7 +4,11 @@ using System.Threading.Tasks;
 namespace MCSM.Api.Ui
 {
     /// <summary>
-    ///     Repl for user interface
+    ///     Repl (Read evaluate print loop) for user interface.
+    ///     Read: The programme waits until console input
+    ///     Evaluate: If an input is registered it will be parsed and the result executed
+    ///     Print: The result will be printed
+    ///     Loop: The programme waits until console input again
     /// </summary>
     public interface IRepl
     {

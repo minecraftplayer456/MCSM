@@ -16,20 +16,26 @@ namespace MCSM.Ui.Util
 
         public string ReadLine()
         {
+            //Read line from system console
             return System.Console.ReadLine();
         }
 
         public void Write(string s)
         {
+            //Write to system console
             System.Console.Write(s);
         }
 
         public void WriteLine(string s)
         {
+            //Write line to system console
             System.Console.WriteLine(s);
         }
     }
 
+    /// <summary>
+    ///     Wrapper for system.commandline.IConsole and mcsm's IConsole
+    /// </summary>
     public class CommandLineConsole : System.CommandLine.IConsole
     {
         private readonly IConsole _console;
@@ -37,6 +43,8 @@ namespace MCSM.Ui.Util
         public CommandLineConsole(IConsole console)
         {
             _console = console;
+
+            //Creates output and error stream from IConsole Out and Error
             Out = StandardStreamWriter.Create(_console.Out);
             Error = StandardStreamWriter.Create(_console.Error);
         }

@@ -2,6 +2,9 @@
 
 namespace MCSM.Api.Manager.IO
 {
+    /// <summary>
+    ///     Interface to log options in serilog
+    /// </summary>
     public interface ILogManager
     {
         /// <summary>

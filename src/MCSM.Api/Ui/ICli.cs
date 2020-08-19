@@ -1,5 +1,8 @@
 ﻿namespace MCSM.Api.Ui
 {
+    /// <summary>
+    ///     Cli (Command line interface) reads the inputs on the command line and parses them.
+    /// </summary>
     public interface ICli
     {
         /// <summary>

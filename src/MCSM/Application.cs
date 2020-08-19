@@ -17,8 +17,12 @@ namespace MCSM
     {
         private readonly ILogger _log;
 
+        /// <summary>
+        ///     Creates new application instance that can run isolated from other application instances
+        /// </summary>
         public Application()
         {
+            //Initializes programme components and inject them each other
             LogManager = new LogManager();
             FileManager = new FileManager(new FileSystem());
             Console = new Console();
@@ -29,19 +33,20 @@ namespace MCSM
         public ILogManager LogManager { get; }
         public IFileManager FileManager { get; }
         public IRepl Repl { get; }
-
         public IConsole Console { get; }
 
         public async Task Start(string[] args)
         {
             _log.Information("Starting MCSM - v.{version}", Constants.McsmVersion);
 
+            //Parse command line arguments
             var cli = new Cli();
-
             var cliResult = cli.Parse(args);
 
+            //Sets options from result of command line parsing
             if (cliResult.Debug) LogManager.RootLogLevel = LogEventLevel.Verbose;
 
+            //Run the repl after initialization
             if (!cliResult.NoRepl) await Repl.Run();
         }
 
@@ -49,6 +54,7 @@ namespace MCSM
         {
             _log.Information("Stopping MCSM");
 
+            //Stops the repl loop
             Repl.Exit();
         }
     }

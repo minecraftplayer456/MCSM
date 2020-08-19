@@ -2,39 +2,43 @@
 using System.IO;
 using System.Text;
 using MCSM.Core.Manager.IO;
-using Serilog;
 using Serilog.Events;
 using Xunit.Abstractions;
 
 namespace MCSM.Core.Test.Util
 {
+    /// <summary>
+    ///     Abstract base class for all tests that will set the output
+    /// </summary>
     public abstract class BaseTest
     {
-        public static bool Initialized;
+        private static bool _initialized;
 
-        public BaseTest(ITestOutputHelper output)
+        protected BaseTest(ITestOutputHelper output)
         {
-            if (!Initialized)
+            if (!_initialized)
             {
                 new LogManager(LogEventLevel.Verbose);
-                Initialized = true;
+                _initialized = true;
             }
 
+            // Bind console out and error to test output writer
             var writer = new TestOutputWriter(output);
             Console.SetOut(writer);
             Console.SetError(writer);
         }
     }
 
+    /// <summary>
+    ///     Warpper class for textWriter to write at test output
+    /// </summary>
     public class TestOutputWriter : TextWriter
     {
-        private readonly ILogger _log;
         private readonly ITestOutputHelper _output;
         private StringBuilder _builder;
 
         public TestOutputWriter(ITestOutputHelper output)
         {
-            _log = Log.ForContext<TestOutputWriter>();
             _output = output;
         }
 
@@ -52,6 +56,7 @@ namespace MCSM.Core.Test.Util
 
         public override void Write(string value)
         {
+            // Wait until \r or \n and print composed string
             _builder ??= new StringBuilder();
             if (value.Contains("\n") || value.Contains("\r"))
             {
@@ -66,6 +71,7 @@ namespace MCSM.Core.Test.Util
 
         public override void Write(char value)
         {
+            // Print warning if a char is try to be printed
             _output.WriteLine($"Writing char to test output: {value}", value);
         }
     }

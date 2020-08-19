@@ -77,6 +77,7 @@ namespace MCSM.Core.Manager.IO
 
         #region File
 
+        //TODO Test with Exist if path exists
         public void Delete(IPath path)
         {
             if (path.IsDirectory)
@@ -96,6 +97,7 @@ namespace MCSM.Core.Manager.IO
             return path.IsDirectory ? _fs.Directory.Exists(path.AbsolutePath) : _fs.File.Exists(path.AbsolutePath);
         }
 
+        //TODO Test with Exist if path exists
         public IEnumerable<string> GetFiles(IPath path, string searchPattern = "*")
         {
             if (path.IsDirectory) return _fs.Directory.GetFileSystemEntries(path.AbsolutePath, searchPattern);
